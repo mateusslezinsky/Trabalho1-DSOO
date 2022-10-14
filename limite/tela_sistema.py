@@ -11,3 +11,14 @@ class TelaSistema:
         print("0 - Sair")
         opcao = int(input("\nEscolha sua opção: "))
         return opcao
+
+    def menu_base(self, menu):
+        print("\n")
+        print("{} {} {}".format("-"*10, menu, "-"*10))
+        print("\n1 - Cadastrar")
+        print("2 - Alterar")
+        print("3 - Consultar")
+        print("4 - Excluir")
+        print("0 - Voltar")
+        opcao = int(input("\nEscolha sua opção: "))
+        return opcao

@@ -14,6 +14,7 @@ class ControladorChapa:
                         0: self.__controlador_sistema.abre_tela}
         while True:
             try:
-                opcoes_chapa[self.__tela_chapa.tela_chapa_opcoes()]()
+                opcoes_chapa[self.__tela_chapa.tela_chapa_opcoes(
+                    self.__controlador_sistema.tela_sistema)]()
             except KeyError:
                 print("\nErro da opção da chapa!")

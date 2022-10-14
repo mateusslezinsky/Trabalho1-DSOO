@@ -7,6 +7,10 @@ class ControladorSistema:
         self.__tela_sistema = TelaSistema()
         self.__controlador_chapa = ControladorChapa(self)
 
+    @property
+    def tela_sistema(self):
+        return self.__tela_sistema
+
     def inicializa_sistema(self):
         self.abre_tela()
 
