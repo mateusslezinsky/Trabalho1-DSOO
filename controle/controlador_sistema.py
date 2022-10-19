@@ -7,7 +7,8 @@ class ControladorSistema:
     def __init__(self):
         self.__tela_sistema = TelaSistema()
         self.__controlador_chapa = ControladorChapa(self)
-        self.__controlador_candidato = ControladorCandidato(self)
+        self.__controlador_candidato = ControladorCandidato(
+            self, self.__controlador_chapa)
 
     @property
     def tela_sistema(self):
@@ -30,3 +31,17 @@ class ControladorSistema:
                 opcoes[opcao_escolhida]()
             except (KeyError, ValueError, KeyboardInterrupt):
                 print("\nDigite uma opção válida!")
+
+    def tela_crud(self, attr):
+
+        opcoes_chapa = {1: attr["cadastro"],
+                        2: attr["alterar"],
+                        3: attr["consultar"],
+                        4: attr["excluir"],
+                        0: self.abre_tela}
+        while True:
+            try:
+                opcoes_chapa[attr["tela"](
+                    self.__tela_sistema)]()
+            except (KeyError, ValueError, KeyboardInterrupt):
+                print("\nOpção inválida!")

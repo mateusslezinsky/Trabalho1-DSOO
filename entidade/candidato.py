@@ -1,8 +1,9 @@
-from chapa import Chapa
+from abc import ABC, abstractmethod
+from entidade.chapa import Chapa
 
 
-class Candidato:
-    # fazer aqui tratamento dos dados, caso os parametros sejam diferentes do esperado
+class Candidato(ABC):
+    @abstractmethod
     def __init__(self, nome: str, numero: int, chapa: Chapa):
         self.__nome = nome
         self.__numero = numero
@@ -24,3 +25,7 @@ class Candidato:
     @numero.setter
     def numero(self, numero: int):
         self.__numero = numero
+
+    @property
+    def chapa(self):
+        return self.__chapa

@@ -8,12 +8,16 @@ class ControladorChapa:
         self.__tela_chapa = TelaChapa()
         self.__controlador_sistema = controlador_sistema
 
-    def cadastro_chapa(self):
+    @property
+    def chapas(self):
+        return self.__chapas
+
+    def cadastra_chapa(self):
         chapa_dict = self.__tela_chapa.cadastrar_chapa(self.__chapas)
         nova_chapa = Chapa(chapa_dict["nome"], chapa_dict["id"])
         self.__chapas.append(nova_chapa)
 
-    def alterar_chapa(self):
+    def altera_chapa(self):
         chapa_consultada = self.consulta_chapa()
         if chapa_consultada is not None:
             dados_tela_chapa = self.__tela_chapa.cadastrar_chapa(self.__chapas)
@@ -43,14 +47,10 @@ class ControladorChapa:
                     self.__tela_chapa.exclui_chapa()
 
     def abre_tela(self):
-        opcoes_chapa = {1: self.cadastro_chapa,
-                        2: self.alterar_chapa,
-                        3: self.consulta_chapa,
-                        4: self.exclui_chapa,
-                        0: self.__controlador_sistema.abre_tela}
-        while True:
-            try:
-                opcoes_chapa[self.__tela_chapa.tela_chapa_opcoes(
-                    self.__controlador_sistema.tela_sistema)]()
-            except (KeyError, ValueError, KeyboardInterrupt):
-                print("\nOpção inválida!")
+        self.__controlador_sistema.tela_crud(
+            {"cadastro": self.cadastra_chapa,
+             "alterar": self.altera_chapa,
+             "consultar": self.consulta_chapa,
+             "excluir": self.exclui_chapa,
+             "tela": self.__tela_chapa.tela_chapa_opcoes
+             })
