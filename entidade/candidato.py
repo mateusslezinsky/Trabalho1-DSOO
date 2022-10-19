@@ -22,6 +22,5 @@ class Candidato:
         self.__nome = nome
 
     @numero.setter
-    def numero(self, numero: str):
+    def numero(self, numero: int):
         self.__numero = numero
-
