@@ -2,11 +2,15 @@ from limite.tela_chapa import TelaChapa
 from entidade.chapa import Chapa
 
 
-class ControladorChapa:
+class ControladorChapas:
     def __init__(self, controlador_sistema):
         self.__chapas = []
-        self.__tela_chapa = TelaChapa()
+        self.__tela_chapa = TelaChapa(self)
         self.__controlador_sistema = controlador_sistema
+
+    @property
+    def controlador_sistema(self):
+        return self.__controlador_sistema
 
     @property
     def chapas(self):
@@ -26,12 +30,13 @@ class ControladorChapa:
                     chapa.nome = dados_tela_chapa["nome"]
                     chapa.id = dados_tela_chapa["id"]
 
-    def consulta_chapa(self):
+    def consulta_chapa(self, mostrar=True):
         id_a_consultar = self.__tela_chapa.consultar_chapa(self.__chapas)
         if len(self.__chapas) > 0:
             for chapa in self.__chapas:
                 if chapa.id == id_a_consultar:
-                    self.__tela_chapa.mostra_chapa(chapa)
+                    if mostrar:
+                        self.__tela_chapa.mostra_chapa(chapa)
                     return chapa
             else:
                 self.__tela_chapa.mostra_chapa(None)

@@ -1,11 +1,15 @@
 class TelaChapa:
-    def tela_chapa_opcoes(self, tela):
-        return tela.menu_base("Chapas")
+    def __init__(self, controlador_chapa):
+        self.__controlador_chapa = controlador_chapa
+
+    def tela_chapa_opcoes(self):
+        return self.__controlador_chapa.controlador_sistema.tela_sistema.menu_base("Chapas")
 
     def tratamento_id(self, lista, tipo):
         while True:
             try:
-                id = int(input("Digite um número de identificação (ID): "))
+                id = int(
+                    input("Digite um número de identificação da chapa (ID): "))
                 if tipo == "Cadastro":
                     for chapa in lista:
                         if id == chapa.id:
@@ -21,7 +25,10 @@ class TelaChapa:
         return id
 
     def cadastrar_chapa(self, lista):
-        nome = input("\nInsira aqui o nome da chapa: ").title()
+        nome = input("\nInsira aqui o nome da chapa: ").title().strip()
+        while len(nome) == 0:
+            nome = input("Inválido! Insira o nome novamente: ").title()
+
         id = self.tratamento_id(lista, "Cadastro")
         return {"nome": nome, "id": id}
 

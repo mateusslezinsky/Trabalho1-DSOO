@@ -29,3 +29,7 @@ class Candidato(ABC):
     @property
     def chapa(self):
         return self.__chapa
+
+    @chapa.setter
+    def chapa(self, chapa: Chapa):
+        self.__chapa = chapa
