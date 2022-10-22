@@ -25,7 +25,8 @@ class TelaSistema:
         print("4 - Excluir")
         print("0 - Voltar")
         opcao = int(input("\nEscolha sua opção: "))
-        self.__controlador_sistema.controlador_candidato.opcao_crud = opcao
+        if menu == "Candidatos":
+            self.__controlador_sistema.controlador_candidato.opcao_crud = opcao
         return opcao
 
     def lida_com_erro(self):

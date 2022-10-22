@@ -1,9 +1,16 @@
 from entidade.chapa import Chapa
 from entidade.candidato import Candidato
+from enum import Enum
+
+
+class TipoProReitor(Enum):
+    GRADUACAO = 1
+    EXTENSAO = 2
+    PESQUISA = 3
 
 
 class ProReitor(Candidato):
-    def __init__(self, nome: str, numero: int, chapa: Chapa, tipo_pro_reitor: int):
+    def __init__(self, nome: str, numero: int, chapa: Chapa, tipo_pro_reitor: TipoProReitor):
         super().__init__(nome, numero, chapa)
 
         # tipo é int sendo:
@@ -18,5 +25,5 @@ class ProReitor(Candidato):
         return self.__tipo_pro_reitor
 
     @tipo_pro_reitor.setter
-    def tipo_pro_reitor(self):
-        return self.__tipo_pro_reitor
+    def tipo_pro_reitor(self, tipo_pro_reitor):
+        self.__tipo_pro_reitor = tipo_pro_reitor
