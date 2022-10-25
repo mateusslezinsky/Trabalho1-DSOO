@@ -6,8 +6,6 @@ from entidade.pro_reitor import ProReitor, TipoProReitor
 class ControladorCandidatos:
     def __init__(self, controlador_sistema, controlador_chapas):
         self.__tela_candidato = TelaCandidato(self)
-        self.__reitores = []
-        self.__pro_reitores = []
         self.__candidatos = []
         self.__controlador_sistema = controlador_sistema
         self.__controlador_chapas = controlador_chapas
@@ -29,14 +27,6 @@ class ControladorCandidatos:
     @property
     def tela_candidato(self):
         return self.__tela_candidato
-
-    @property
-    def reitores(self):
-        return self.__reitores
-
-    @property
-    def pro_reitores(self):
-        return self.__pro_reitores
 
     def escolhe_tipo_candidato(self):
         if self.opcao_crud == 1:
