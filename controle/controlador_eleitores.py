@@ -13,21 +13,23 @@ class ControladorEleitores:
         return self.__controlador_sistema
 
     def cadastra_eleitor(self):
-        eleitor_dict = self.__tela_eleitor.cadastra_eleitor(self.__eleitores)
-        novo_eleitor = Eleitor(eleitor_dict["nome"], eleitor_dict["cpf"])
+        eleitor_dict = self.__tela_eleitor.cadastra_eleitor()
+        novo_eleitor = Eleitor(
+            eleitor_dict["nome"], eleitor_dict["cpf"], eleitor_dict["tipo_eleitor"])
         self.__eleitores.append(novo_eleitor)
 
     def altera_eleitor(self):
         eleitor_consultado = self.consulta_eleitor()
         if eleitor_consultado is not None:
-            dados_tela_eleitor = self.__tela_eleitor.cadastra_eleitor(self.__eleitores)
+            dados_tela_eleitor = self.__tela_eleitor.cadastra_eleitor()
             for eleitor in self.__eleitores:
                 if eleitor.cpf == eleitor_consultado.cpf:
                     eleitor.nome = dados_tela_eleitor["nome"]
                     eleitor.cpf = dados_tela_eleitor["cpf"]
+                    eleitor.tipo_eleitor = dados_tela_eleitor["tipo_eleitor"]
 
     def consulta_eleitor(self, mostrar=True):
-        id_a_consultar = self.__tela_eleitor.consulta_eleitor(self.__eleitores)
+        id_a_consultar = self.__tela_eleitor.consulta_eleitor()
         if len(self.__eleitores) > 0:
             for eleitor in self.__eleitores:
                 if eleitor.cpf == id_a_consultar:
