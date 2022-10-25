@@ -8,10 +8,15 @@ class ControladorCandidatos:
         self.__tela_candidato = TelaCandidato(self)
         self.__reitores = []
         self.__pro_reitores = []
+        self.__candidatos = []
         self.__controlador_sistema = controlador_sistema
         self.__controlador_chapas = controlador_chapas
         self.opcao_crud = 0
         self.opcao_tipo_candidato = 0
+
+    @property
+    def candidatos(self):
+        return self.__candidatos
 
     @property
     def controlador_sistema(self):
@@ -82,7 +87,7 @@ class ControladorCandidatos:
             if self.opcao_tipo_candidato == 1:
                 reitor_a_cadastrar = Reitor(
                     candidato["nome"], candidato["numero"], objeto_chapa)
-                self.__reitores.append(reitor_a_cadastrar)
+                self.__candidatos.append(reitor_a_cadastrar)
             elif self.opcao_tipo_candidato == 2:
                 if candidato["tipo_pro_reitor"] == 1:
                     pro_reitor_a_cadastrar = ProReitor(
@@ -93,7 +98,7 @@ class ControladorCandidatos:
                 elif candidato["tipo_pro_reitor"] == 3:
                     pro_reitor_a_cadastrar = ProReitor(
                         candidato["nome"], candidato["numero"], objeto_chapa, TipoProReitor.PESQUISA.value)
-                self.__pro_reitores.append(
+                self.__candidatos.append(
                     pro_reitor_a_cadastrar)
 
     def altera_candidato(self):
@@ -104,11 +109,7 @@ class ControladorCandidatos:
             objeto_chapa = self.controlador_chapas.consulta_chapa(
                 mostrar=False)
             if objeto_chapa is not None:
-                if self.opcao_tipo_candidato == 1:
-                    lista = self.__reitores
-                elif self.opcao_tipo_candidato == 2:
-                    lista = self.__pro_reitores
-                for candidato in lista:
+                for candidato in self.__candidatos:
                     if candidato.numero == candidato_consultado.numero:
                         candidato.nome = dados_candidato["nome"]
                         candidato.numero = dados_candidato["numero"]
@@ -118,11 +119,7 @@ class ControladorCandidatos:
 
     def consulta_candidato(self, mostrar=True):
         numero_consultado = self.tela_candidato.consulta_candidato()
-        if self.opcao_tipo_candidato == 1:
-            lista = self.__reitores
-        elif self.opcao_tipo_candidato == 2:
-            lista = self.__pro_reitores
-        for candidato in lista:
+        for candidato in self.__candidatos:
             if candidato.numero == numero_consultado:
                 if mostrar:
                     self.tela_candidato.imprime_dados(
@@ -135,11 +132,7 @@ class ControladorCandidatos:
     def exclui_candidato(self):
         candidato_consultado = self.consulta_candidato()
         if candidato_consultado is not None:
-            if self.opcao_tipo_candidato == 1:
-                lista = self.__reitores
-            elif self.opcao_tipo_candidato == 2:
-                lista = self.__pro_reitores
-            for candidato in lista:
+            for candidato in self.__candidatos:
                 if candidato.numero == candidato_consultado.numero:
-                    lista.remove(candidato)
+                    self.__candidatos.remove(candidato)
                     self.__tela_candidato.remove_candidato()

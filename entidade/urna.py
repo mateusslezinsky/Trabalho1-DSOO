@@ -1,6 +1,6 @@
 class Urna:
-    def __init__(self, reitores: list, pro_reitores: list, eleitores: list):
-        self.__candidatos = [*reitores, *pro_reitores]
+    def __init__(self, candidatos, eleitores: list):
+        self.__candidatos = candidatos
         self.__eleitores = eleitores
         self.__homologada = False
         self.__votos = []
