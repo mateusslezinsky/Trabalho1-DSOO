@@ -1,22 +1,51 @@
 from limite.tela_eleitor import TelaEleitor
+from entidade.eleitor import Eleitor, TipoEleitor
 
 
 class ControladorEleitores:
     def __init__(self, controlador_sistema):
-        self.__tela_eleitor = TelaEleitor()
+        self.__eleitores = []
+        self.__tela_eleitor = TelaEleitor(self)
         self.__controlador_sistema = controlador_sistema
 
+    @property
+    def controlador_sistema(self):
+        return self.__controlador_sistema
+
     def cadastra_eleitor(self):
-        pass
+        eleitor_dict = self.__tela_eleitor.cadastra_eleitor(self.__eleitores)
+        novo_eleitor = Eleitor(eleitor_dict["nome"], eleitor_dict["cpf"])
+        self.__eleitores.append(novo_eleitor)
 
     def altera_eleitor(self):
-        pass
+        eleitor_consultado = self.consulta_eleitor()
+        if eleitor_consultado is not None:
+            dados_tela_eleitor = self.__tela_eleitor.cadastra_eleitor(self.__eleitores)
+            for eleitor in self.__eleitores:
+                if eleitor.cpf == eleitor_consultado.cpf:
+                    eleitor.nome = dados_tela_eleitor["nome"]
+                    eleitor.cpf = dados_tela_eleitor["cpf"]
 
-    def consulta_eleitor(self):
-        pass
+    def consulta_eleitor(self, mostrar=True):
+        id_a_consultar = self.__tela_eleitor.consulta_eleitor(self.__eleitores)
+        if len(self.__eleitores) > 0:
+            for eleitor in self.__eleitores:
+                if eleitor.cpf == id_a_consultar:
+                    if mostrar:
+                        self.__tela_eleitor.mostra_eleitor(eleitor)
+                    return eleitor
+            else:
+                self.__tela_eleitor.mostra_eleitor(None)
+        else:
+            self.__tela_eleitor.mostra_eleitor(None)
 
     def exclui_eleitor(self):
-        pass
+        eleitor_consultado = self.consulta_eleitor()
+        if eleitor_consultado is not None:
+            for eleitor in self.__eleitores:
+                if eleitor.cpf == eleitor_consultado.cpf:
+                    self.__eleitores.remove(eleitor)
+                    self.__tela_eleitor.exclui_eleitor()
 
     def abre_tela(self):
         self.__controlador_sistema.tela_crud(

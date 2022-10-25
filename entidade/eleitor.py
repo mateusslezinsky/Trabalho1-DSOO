@@ -1,8 +1,13 @@
-from abc import ABC, abstractmethod
+from enum import Enum
 
 
-class Eleitor(ABC):
-    @abstractmethod
+class TipoEleitor(Enum):
+    ALUNO = 1
+    PROFESSOR = 2
+    SERVIDOR = 3
+
+
+class Eleitor:
     def __init__(self, nome: str, cpf: int):
         self.__nome = nome
         self.__cpf = cpf

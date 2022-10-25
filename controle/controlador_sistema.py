@@ -11,7 +11,7 @@ class ControladorSistema:
         self.__controlador_chapa = ControladorChapas(self)
         self.__controlador_candidatos = ControladorCandidatos(
             self, self.__controlador_chapa)
-        self.__controlador_eleitores = ControladorEleitores
+        self.__controlador_eleitores = ControladorEleitores(self)
         self.__controlador_urna = ControladorUrna(
             self, self.__controlador_candidatos, self.__controlador_eleitores)
 
@@ -23,6 +23,10 @@ class ControladorSistema:
     def controlador_candidato(self):
         return self.__controlador_candidatos
 
+    @property
+    def controlador_eleitores(self):
+        return self.__controlador_eleitores
+
     def inicializa_sistema(self):
         self.abre_tela()
 
@@ -33,6 +37,7 @@ class ControladorSistema:
         opcoes = {0: self.encerra_sistema,
                   1: self.__controlador_chapa.abre_tela,
                   2: self.__controlador_candidatos.abre_tela,
+                  3: self.__controlador_eleitores.abre_tela,
                   4: self.__controlador_urna.homologacao,
                   5: self.__controlador_urna.votacao}
 
