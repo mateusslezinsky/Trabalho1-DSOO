@@ -2,7 +2,7 @@ from entidade.pro_reitor import ProReitor, TipoProReitor
 
 
 class TelaCandidato:
-    def __init__(self, controlador_candidatos):
+    def _init_(self, controlador_candidatos):
         self.__controlador_candidatos = controlador_candidatos
 
     def tela_candidato_opcoes(self):
@@ -34,7 +34,7 @@ class TelaCandidato:
             numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
                 "Digite um número válido para o candidato: ")
 
-        while self.__controlador_candidatos.checa_se_ja_existe(numero, self.__controlador_candidatos.candidatos):
+        while self._controlador_candidatos.checa_se_ja_existe(numero, self._controlador_candidatos.candidatos):
             numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
                 "Já existe! Digite um outro número pro candidato: ")
 
