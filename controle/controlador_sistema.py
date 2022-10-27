@@ -39,7 +39,8 @@ class ControladorSistema:
                   2: self.__controlador_candidatos.abre_tela,
                   3: self.__controlador_eleitores.abre_tela,
                   4: self.__controlador_urna.homologacao,
-                  5: self.__controlador_urna.votacao}
+                  5: self.__controlador_urna.votacao,
+                  6: self.__controlador_urna.calcula_resultado}
 
         while True:
             try:
@@ -49,7 +50,10 @@ class ControladorSistema:
                 self.__tela_sistema.lida_com_erro()
 
     def tela_crud(self, attr):
-
+        if self.__controlador_urna.urna is not None and self.__controlador_urna.urna.homologada:
+            self.__controlador_urna.tela_urna.imprime_mensagem(
+                "Com a urna homologada não é possível fazer modificações!")
+            return
         opcoes = {1: attr["cadastro"],
                   2: attr["alterar"],
                   3: attr["consultar"],

@@ -14,6 +14,10 @@ class TelaEleitor:
             nome = input("Inválido! Insira o nome novamente: ").title()
         cpf = self.__controlador_eleitores.controlador_sistema.tela_sistema.verifica_int(
             "Digite o CPF do eleitor: ")
+        while self.__controlador_eleitores.checa_se_ja_existe(cpf, self.__controlador_eleitores.eleitores):
+            cpf = self.__controlador_eleitores.controlador_sistema.tela_sistema.verifica_int(
+                "Já existe! Digite outro CPF para o eleitor: ")
+
         print("\nEscolha um tipo de eleitor, sendo:")
         print("1 - Aluno")
         print("2 - Professor")

@@ -1,10 +1,10 @@
 class Urna:
-    def __init__(self, reitores: list, pro_reitores: list, eleitores: list):
-        self.__candidatos = [*reitores, *pro_reitores]
+    def __init__(self, candidatos, eleitores: list):
+        self.__candidatos = candidatos
         self.__eleitores = eleitores
         self.__homologada = False
-        self.__votos = []
         self.__turno = 1
+        self.__votos = []
 
     @property
     def candidatos(self) -> list:
@@ -15,16 +15,16 @@ class Urna:
         return self.__eleitores
 
     @property
+    def votos(self) -> list:
+        return self.__votos
+
+    @property
     def homologada(self) -> bool:
         return self.__homologada
 
     @homologada.setter
     def homologada(self, homologada):
         self.__homologada = homologada
-
-    @property
-    def votos(self) -> list:
-        return self.__votos
 
     @property
     def turno(self) -> int:

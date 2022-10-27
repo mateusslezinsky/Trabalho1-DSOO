@@ -29,15 +29,18 @@ class TelaCandidato:
         while len(nome) == 0:
             nome = input("Inválido! Insira o nome novamente: ").title()
         numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-            "Digite o número do candidato: ")
-        if self.__controlador_candidatos.opcao_tipo_candidato == 1:
-            lista = self.__controlador_candidatos.reitores
-        elif self.__controlador_candidatos.opcao_tipo_candidato == 2:
-            lista = self.__controlador_candidatos.pro_reitores
+            "Digite o número do candidato (1-98): ")
+        while not 1 <= numero <= 98:
+            numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
+                "Digite um número válido para o candidato: ")
 
-        while self.__controlador_candidatos.checa_se_ja_existe(numero, lista):
+        while self.__controlador_candidatos.checa_se_ja_existe(numero, self.__controlador_candidatos.candidatos):
             numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
                 "Já existe! Digite um outro número pro candidato: ")
+
+            while not 1 <= numero <= 98:
+                numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
+                    "Digite um número válido para o candidato: ")
 
         dados_basicos = {"nome": nome, "numero": numero}
 

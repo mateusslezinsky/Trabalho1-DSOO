@@ -12,6 +12,10 @@ class ControladorEleitores:
     def controlador_sistema(self):
         return self.__controlador_sistema
 
+    @property
+    def eleitores(self):
+        return self.__eleitores
+
     def cadastra_eleitor(self):
         eleitor_dict = self.__tela_eleitor.cadastra_eleitor()
         novo_eleitor = Eleitor(
@@ -57,3 +61,10 @@ class ControladorEleitores:
              "excluir": self.exclui_eleitor,
              "tela": self.__tela_eleitor.tela_eleitor_opcoes
              })
+
+    def checa_se_ja_existe(self, id_a_checar, lista):
+        for item in lista:
+            if item.cpf == id_a_checar:
+                return True
+        else:
+            return False
