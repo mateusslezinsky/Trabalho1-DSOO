@@ -6,12 +6,23 @@ class TelaUrna:
     def __init__(self, controlador_urna):
         self.__controlador_urna = controlador_urna
 
+    def tela_principal(self):
+        print("\n")
+        print("-"*10, "Urna", "-"*10)
+        print("1 - Homologação de urna")
+        print("2 - Votar")
+        print("3 - Encerrar votação")
+        print("4 - Resultados")
+        print("0 - Voltar")
+        opcao = int(input("\nEscolha sua opção: "))
+        return opcao
+
     def imprime_mensagem(self, mensagem):
         print(mensagem)
 
     def obtem_dados_voto(self):
         reitor = input(
-            "Digite o número do reitor que deseja votar: ")
+            "\nDigite o número do reitor que deseja votar: ")
         reitor = self.confirma_voto(reitor, "reitor")
         pro_grad = input(
             "Digite o número do pró-reitor de graduação que deseja votar: ")
@@ -36,12 +47,12 @@ class TelaUrna:
             confirmacao = input("Confirma o voto? (S/N): ").upper()
         return candidato
 
-    def desfaz_homologacao(self):
+    """ def desfaz_homologacao(self):
         homologacao = input(
             "A urna já está homologada. Deseja desfazer (S/N)? ").upper()
         if homologacao == "N" or homologacao != "S":
             return False
-        return True
+        return True """
 
     def escreve_resultados(self, candidatos):
         with open("resultados.txt", "w") as file:
@@ -80,7 +91,7 @@ class TelaUrna:
                 file.write(
                     f"Um total de {candidato.votos_professor} voto(s) de professor\n")
                 file.write(
-                    f"Teve um total de {candidato.votos_servidor} voto(s) de servidor\n")
+                    f"E um total de {candidato.votos_servidor} voto(s) de servidor\n")
                 file.write("-"*20)
                 file.write("\n\n")
 

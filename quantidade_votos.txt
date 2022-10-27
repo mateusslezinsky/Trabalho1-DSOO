@@ -1,0 +1,44 @@
+O candidato a reitor
+De nome: 1
+De número: 1
+Concorrendo pela chapa de nome: A
+Com ID de chapa: 1
+
+Teve um total de 1 voto(s) de aluno
+Um total de 0 voto(s) de professor
+E um total de 0 voto(s) de servidor
+--------------------
+
+O candidato a pró-reitor de graduação
+De nome: 1
+De número: 2
+Concorrendo pela chapa de nome: A
+Com ID de chapa: 1
+
+Teve um total de 1 voto(s) de aluno
+Um total de 0 voto(s) de professor
+E um total de 0 voto(s) de servidor
+--------------------
+
+O candidato a pró-reitor de extensão
+De nome: 3
+De número: 3
+Concorrendo pela chapa de nome: A
+Com ID de chapa: 1
+
+Teve um total de 1 voto(s) de aluno
+Um total de 0 voto(s) de professor
+E um total de 0 voto(s) de servidor
+--------------------
+
+O candidato a pró-reitor de pesquisa
+De nome: 4
+De número: 4
+Concorrendo pela chapa de nome: A
+Com ID de chapa: 1
+
+Teve um total de 1 voto(s) de aluno
+Um total de 0 voto(s) de professor
+E um total de 0 voto(s) de servidor
+--------------------
+

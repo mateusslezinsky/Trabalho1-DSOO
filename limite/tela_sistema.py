@@ -9,9 +9,7 @@ class TelaSistema:
         print("1 - Chapas")
         print("2 - Candidatos")
         print("3 - Eleitores")
-        print("4 - Homologação de urna")
-        print("5 - Realizar voto")
-        print("6 - Resultados")
+        print("4 - Funções da urna")
         print("0 - Sair")
         opcao = int(input("\nEscolha sua opção: "))
         return opcao

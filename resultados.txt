@@ -1,0 +1,48 @@
+O reitor vencedor é: 
+Nome: 1 
+Número: 1 
+Pontuação: 0.25
+Quantidade de votos de aluno: 1
+Quantidade de votos de professor: 0
+Quantidade de votos de servidor: 0
+--------------------
+Nome da chapa: A
+ID da chapa: 1
+--------------------
+
+O pró-reitor de graduação vencedor é: 
+Nome: 1 
+Número: 2 
+Pontuação: 0.25
+Quantidade de votos de aluno: 1
+Quantidade de votos de professor: 0
+Quantidade de votos de servidor: 0
+--------------------
+Nome da chapa: A
+ID da chapa: 1
+--------------------
+
+O pró-reitor de extensão vencedor é: 
+Nome: 3 
+Número: 3 
+Pontuação: 0.25
+Quantidade de votos de aluno: 1
+Quantidade de votos de professor: 0
+Quantidade de votos de servidor: 0
+--------------------
+Nome da chapa: A
+ID da chapa: 1
+--------------------
+
+O pró-reitor de pesquisa vencedor é: 
+Nome: 4 
+Número: 4 
+Pontuação: 0.25
+Quantidade de votos de aluno: 1
+Quantidade de votos de professor: 0
+Quantidade de votos de servidor: 0
+--------------------
+Nome da chapa: A
+ID da chapa: 1
+--------------------
+

@@ -27,9 +27,6 @@ class ControladorSistema:
     def controlador_eleitores(self):
         return self.__controlador_eleitores
 
-    def inicializa_sistema(self):
-        self.abre_tela()
-
     def encerra_sistema(self):
         exit(0)
 
@@ -38,9 +35,7 @@ class ControladorSistema:
                   1: self.__controlador_chapa.abre_tela,
                   2: self.__controlador_candidatos.abre_tela,
                   3: self.__controlador_eleitores.abre_tela,
-                  4: self.__controlador_urna.homologacao,
-                  5: self.__controlador_urna.votacao,
-                  6: self.__controlador_urna.calcula_resultado}
+                  4: self.__controlador_urna.abre_tela}
 
         while True:
             try:
