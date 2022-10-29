@@ -99,3 +99,6 @@ class TelaCandidato:
 
     def remove_candidato(self):
         print("\nO candidato acima foi excluído com sucesso!")
+
+    def imprime_resposta_segundo_turno(self):
+        print("O candidato não foi cadastrado/modificado. Motivo: segundo turno")

@@ -16,6 +16,10 @@ class ControladorEleitores:
     def eleitores(self):
         return self.__eleitores
 
+    @eleitores.setter
+    def eleitores(self, eleitores):
+        self.__eleitores = eleitores
+
     def cadastra_eleitor(self):
         eleitor_dict = self.__tela_eleitor.cadastra_eleitor()
         novo_eleitor = Eleitor(

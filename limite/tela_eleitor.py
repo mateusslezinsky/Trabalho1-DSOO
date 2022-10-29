@@ -47,8 +47,8 @@ class TelaEleitor:
             print("Não foi possível encontrar o eleitor!")
         else:
             print("\nEleitor cadastrado:")
-            print("Nome: ", dados.nome)
-            print("CPF: ", dados.cpf)
+            print("Nome:", dados.nome)
+            print("CPF:", dados.cpf)
             if dados.tipo_eleitor == 1:
                 print("Tipo de eleitor: aluno")
             elif dados.tipo_eleitor == 2:

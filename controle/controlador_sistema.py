@@ -8,9 +8,9 @@ from controle.controlador_eleitores import ControladorEleitores
 class ControladorSistema:
     def __init__(self):
         self.__tela_sistema = TelaSistema(self)
-        self.__controlador_chapa = ControladorChapas(self)
+        self.__controlador_chapas = ControladorChapas(self)
         self.__controlador_candidatos = ControladorCandidatos(
-            self, self.__controlador_chapa)
+            self, self.__controlador_chapas)
         self.__controlador_eleitores = ControladorEleitores(self)
         self.__controlador_urna = ControladorUrna(
             self, self.__controlador_candidatos, self.__controlador_eleitores)
@@ -20,19 +20,23 @@ class ControladorSistema:
         return self.__tela_sistema
 
     @property
-    def controlador_candidato(self):
+    def controlador_candidatos(self):
         return self.__controlador_candidatos
 
     @property
     def controlador_eleitores(self):
         return self.__controlador_eleitores
 
+    @property
+    def controlador_urna(self):
+        return self.__controlador_urna
+
     def encerra_sistema(self):
         exit(0)
 
     def abre_tela(self):
         opcoes = {0: self.encerra_sistema,
-                  1: self.__controlador_chapa.abre_tela,
+                  1: self.__controlador_chapas.abre_tela,
                   2: self.__controlador_candidatos.abre_tela,
                   3: self.__controlador_eleitores.abre_tela,
                   4: self.__controlador_urna.abre_tela}
@@ -59,3 +63,12 @@ class ControladorSistema:
                 opcoes[attr["tela"]()]()
             except (KeyError, ValueError, KeyboardInterrupt):
                 self.__tela_sistema.lida_com_erro()
+
+    def redefine_sistema(self):
+        self.__controlador_candidatos.candidatos = []
+        self.__controlador_eleitores.eleitores = []
+        self.__controlador_chapas.chapas = []
+        self.__controlador_urna.urna = None
+        self.__controlador_urna.votacao_encerrada = False
+        self.__controlador_urna.resultados_calculados = False
+        self.__tela_sistema.mensagem_redefine_sistema()

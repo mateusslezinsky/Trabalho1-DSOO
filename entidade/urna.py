@@ -5,6 +5,8 @@ class Urna:
         self.__homologada = False
         self.__turno = 1
         self.__votos = []
+        self.__eleitores_votaram = []
+        self.__quantidade_votos_invalidos = 0
 
     @property
     def candidatos(self) -> list:
@@ -33,3 +35,15 @@ class Urna:
     @turno.setter
     def turno(self, turno):
         self.__turno = turno
+
+    @property
+    def quantidade_votos_invalidos(self) -> int:
+        return self.__quantidade_votos_invalidos
+
+    @quantidade_votos_invalidos.setter
+    def quantidade_votos_invalidos(self, quantidade_votos_invalidos):
+        self.__quantidade_votos_invalidos = quantidade_votos_invalidos
+
+    @property
+    def eleitores_votaram(self) -> list:
+        return self.__eleitores_votaram

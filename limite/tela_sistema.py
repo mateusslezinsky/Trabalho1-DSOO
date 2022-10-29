@@ -24,7 +24,7 @@ class TelaSistema:
         print("0 - Voltar")
         opcao = int(input("\nEscolha sua opção: "))
         if menu == "Candidatos":
-            self.__controlador_sistema.controlador_candidato.opcao_crud = opcao
+            self.__controlador_sistema.controlador_candidatos.opcao_crud = opcao
         return opcao
 
     def lida_com_erro(self):
@@ -38,3 +38,6 @@ class TelaSistema:
             except ValueError:
                 print("\nO valor digitado não é válido. Tente novamente!")
         return variavel
+
+    def mensagem_redefine_sistema(self):
+        print("O sistema e a urna foram redefinidos")

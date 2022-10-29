@@ -14,7 +14,7 @@ class ControladorUrna:
         self.__urna = None
         self.__votacao_encerrada = False
         self.__resultados_calculados = False
-        self.__eleitores_votaram = []
+        self.__segundo_turno = False
 
     @property
     def tela_urna(self):
@@ -29,6 +29,26 @@ class ControladorUrna:
         self.__urna = urna
 
     @property
+    def votacao_encerrada(self):
+        return self.__votacao_encerrada
+
+    @property
+    def resultados_calculados(self):
+        return self.__resultados_calculados
+
+    @votacao_encerrada.setter
+    def votacao_encerrada(self, votacao_encerrada):
+        self.__votacao_encerrada = votacao_encerrada
+
+    @resultados_calculados.setter
+    def resultados_calculados(self, resultados_calculados):
+        self.__resultados_calculados = resultados_calculados
+
+    @property
+    def segundo_turno(self):
+        return self.__segundo_turno
+
+    @property
     def controlador_sistema(self):
         return self.__controlador_sistema
 
@@ -37,7 +57,8 @@ class ControladorUrna:
                   1: self.homologacao,
                   2: self.votacao,
                   3: self.encerra_votacao,
-                  4: self.calcula_resultado}
+                  4: self.calcula_resultado,
+                  5: self.define_segundo_turno}
         while True:
             try:
                 opcao_escolhida = self.__tela_urna.tela_principal()
@@ -46,19 +67,9 @@ class ControladorUrna:
                 self.__controlador_sistema.tela_sistema.lida_com_erro()
 
     def homologacao(self):
-        quantidade_pro_grad = 0
-        quantidade_pro_ext = 0
-        quantidade_pro_pesquisa = 0
-        for pro_reitor in self.__controlador_candidatos.candidatos:
-            if isinstance(pro_reitor, ProReitor):
-                if pro_reitor.tipo_pro_reitor == 1:
-                    quantidade_pro_grad += 1
-                elif pro_reitor.tipo_pro_reitor == 2:
-                    quantidade_pro_ext += 1
-                elif pro_reitor.tipo_pro_reitor == 3:
-                    quantidade_pro_pesquisa += 1
+        quantidade_reitor, quantidade_pro_grad, quantidade_pro_ext, quantidade_pro_pesquisa = self.__controlador_candidatos.conta_candidatos()
         if len(self.__controlador_eleitores.eleitores) > 0 \
-                and len(self.__controlador_candidatos.candidatos) > 0 \
+                and quantidade_reitor > 0 \
                 and quantidade_pro_grad > 0 \
                 and quantidade_pro_ext > 0 \
                 and quantidade_pro_pesquisa > 0:
@@ -99,7 +110,7 @@ class ControladorUrna:
             else:
                 eleitor_consultado = self.__controlador_eleitores.consulta_eleitor()
                 if eleitor_consultado is not None:
-                    for eleitor in self.__eleitores_votaram:
+                    for eleitor in self.__urna.eleitores_votaram:
                         if eleitor_consultado == eleitor:
                             self.__tela_urna.imprime_mensagem(
                                 "O eleitor já votou!")
@@ -125,19 +136,24 @@ class ControladorUrna:
                             or (isinstance(pro_pesquisa, ProReitor)
                                 and pro_pesquisa.tipo_pro_reitor != TipoProReitor.PESQUISA.value):
                             pro_pesquisa = 99
-                        print(reitor, pro_grad, pro_ext, pro_pesquisa)
-                        voto = Voto(reitor, pro_grad, pro_ext, pro_pesquisa,
+                        lista_candidatos = [
+                            reitor, pro_grad, pro_ext, pro_pesquisa]
+                        for candidato in lista_candidatos:
+                            if candidato == 99 or candidato == 0:
+                                self.__urna.quantidade_votos_invalidos += 1
+                        voto = Voto(*lista_candidatos,
                                     eleitor_consultado.tipo_eleitor)
                         self.__urna.votos.append(voto)
-                        self.__eleitores_votaram.append(eleitor_consultado)
+                        self.__urna.eleitores_votaram.append(
+                            eleitor_consultado)
 
     def obtem_proporcao(self, voto):
         if voto.tipo_eleitor == 1:
-            proporcao = 1/400
+            proporcao = 1/40000
         elif voto.tipo_eleitor == 2:
-            proporcao = 1/25
+            proporcao = 1/2500
         elif voto.tipo_eleitor == 3:
-            proporcao = 1/31
+            proporcao = 1/3100
         return proporcao * 100
 
     def calcula_resultado(self):
@@ -156,7 +172,7 @@ class ControladorUrna:
                                 candidato.votos_professor += 1
                             elif voto.tipo_eleitor == 3:
                                 candidato.votos_servidor += 1
-                            candidato.pontuacao += proporcao
+                            candidato.pontuacao += round(proporcao, 6)
                 reitor_vencendo = None
                 pro_grad_vencendo = None
                 pro_ext_vencendo = None
@@ -183,6 +199,7 @@ class ControladorUrna:
                     "Os resultados foram escritos para o arquivo resultados.txt.")
                 self.__tela_urna.imprime_mensagem(
                     "A quantidade total de votos foi escrita para o arquivo quantidade_votos.txt.")
+                self.__controlador_sistema.redefine_sistema()
             else:
                 self.__tela_urna.imprime_mensagem(
                     "Os resultados já foram calculados!")
@@ -200,3 +217,11 @@ class ControladorUrna:
                 self.__tela_urna.imprime_mensagem("Votação encerrada!")
         else:
             self.__tela_urna.imprime_mensagem("Não há votos na urna!")
+
+    def define_segundo_turno(self):
+        resposta = self.__tela_urna.define_segundo_turno()
+        if resposta == 1:
+            self.__segundo_turno = False
+        elif resposta == 2:
+            self.__segundo_turno = True
+        self.__controlador_sistema.redefine_sistema()

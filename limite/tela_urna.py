@@ -13,6 +13,7 @@ class TelaUrna:
         print("2 - Votar")
         print("3 - Encerrar votação")
         print("4 - Resultados")
+        print("5 - Definir turno")
         print("0 - Voltar")
         opcao = int(input("\nEscolha sua opção: "))
         return opcao
@@ -47,12 +48,15 @@ class TelaUrna:
             confirmacao = input("Confirma o voto? (S/N): ").upper()
         return candidato
 
-    """ def desfaz_homologacao(self):
-        homologacao = input(
-            "A urna já está homologada. Deseja desfazer (S/N)? ").upper()
-        if homologacao == "N" or homologacao != "S":
-            return False
-        return True """
+    def define_segundo_turno(self):
+        print("\n")
+        print("-"*10, "Escolha de turno", "-"*10)
+        print("1 - Primeiro turno")
+        print("2 - Segundo turno")
+        opcao = int(input("\nEscolha sua opção: "))
+        while opcao != 1 and opcao != 2:
+            opcao = int(input("Inválido! Escolha sua opção novamente: "))
+        return opcao
 
     def escreve_resultados(self, candidatos):
         with open("resultados.txt", "w") as file:
@@ -78,9 +82,11 @@ class TelaUrna:
 
     def escreve_quantidades(self):
         with open("quantidade_votos.txt", "w") as file:
+            file.write(
+                f"Total de votos nulos/inválidos: {self.__controlador_urna.urna.quantidade_votos_invalidos}\n\n")
             for candidato in self.__controlador_urna.urna.candidatos:
                 tipo_candidato = self.verifica_tipo_candidato(candidato)
-                file.write(f"O candidato a {tipo_candidato}\n")
+                file.write(f"O {tipo_candidato}\n")
                 file.write(f"De nome: {candidato.nome}\n")
                 file.write(f"De número: {candidato.numero}\n")
                 file.write(

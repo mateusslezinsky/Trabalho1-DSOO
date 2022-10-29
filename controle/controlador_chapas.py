@@ -16,6 +16,10 @@ class ControladorChapas:
     def chapas(self):
         return self.__chapas
 
+    @chapas.setter
+    def chapas(self, chapas):
+        self.__chapas = chapas
+
     def cadastra_chapa(self):
         chapa_dict = self.__tela_chapa.cadastrar_chapa(self.__chapas)
         nova_chapa = Chapa(chapa_dict["nome"], chapa_dict["id"])
