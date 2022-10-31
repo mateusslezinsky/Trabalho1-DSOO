@@ -1,3 +1,4 @@
+from entidade.eleitor import TipoEleitor
 from entidade.urna import Urna
 from limite.tela_urna import TelaUrna
 from entidade.reitor import Reitor
@@ -128,7 +129,7 @@ class ControladorUrna:
                             or (isinstance(pro_grad, ProReitor)
                                 and pro_grad.tipo_pro_reitor != TipoProReitor.GRADUACAO.value):
                             pro_grad = 99
-                        if isinstance(pro_ext, Reitor)\
+                        if isinstance(pro_ext, Reitor) \
                                 or (isinstance(pro_ext, ProReitor)
                                     and pro_ext.tipo_pro_reitor != TipoProReitor.EXTENSAO.value):
                             pro_ext = 99
@@ -166,11 +167,11 @@ class ControladorUrna:
                                 voto.pro_grad == candidato or \
                                 voto.pro_ext == candidato or \
                                 voto.pro_pesquisa == candidato:
-                            if voto.tipo_eleitor == 1:
+                            if voto.tipo_eleitor == TipoEleitor.ALUNO.value:
                                 candidato.votos_aluno += 1
-                            elif voto.tipo_eleitor == 2:
+                            elif voto.tipo_eleitor == TipoEleitor.PROFESSOR.value:
                                 candidato.votos_professor += 1
-                            elif voto.tipo_eleitor == 3:
+                            elif voto.tipo_eleitor == TipoEleitor.SERVIDOR.value:
                                 candidato.votos_servidor += 1
                             candidato.pontuacao += round(proporcao, 6)
                 reitor_vencendo = None
@@ -182,13 +183,13 @@ class ControladorUrna:
                         if reitor_vencendo is None or candidato.pontuacao > reitor_vencendo.pontuacao:
                             reitor_vencendo = candidato
                     if isinstance(candidato, ProReitor):
-                        if candidato.tipo_pro_reitor == 1:
+                        if candidato.tipo_pro_reitor == TipoProReitor.GRADUACAO.value:
                             if pro_grad_vencendo is None or candidato.pontuacao > pro_grad_vencendo.pontuacao:
                                 pro_grad_vencendo = candidato
-                        elif candidato.tipo_pro_reitor == 2:
+                        elif candidato.tipo_pro_reitor == TipoProReitor.EXTENSAO.value:
                             if pro_ext_vencendo is None or candidato.pontuacao > pro_ext_vencendo.pontuacao:
                                 pro_ext_vencendo = candidato
-                        elif candidato.tipo_pro_reitor == 3:
+                        elif candidato.tipo_pro_reitor == TipoProReitor.PESQUISA.value:
                             if pro_pesquisa_vencendo is None or candidato.pontuacao > pro_pesquisa_vencendo.pontuacao:
                                 pro_pesquisa_vencendo = candidato
                 self.__tela_urna.escreve_quantidades()

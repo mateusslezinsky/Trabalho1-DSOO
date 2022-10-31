@@ -10,7 +10,6 @@ class Candidato(ABC):
         if isinstance(chapa, Chapa):
             self.__chapa = chapa
         self.__pontuacao = 0
-        self.__votos = 0
         self.__votos_aluno = 0
         self.__votos_professor = 0
         self.__votos_servidor = 0
