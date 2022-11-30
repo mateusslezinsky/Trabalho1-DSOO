@@ -1,4 +1,8 @@
-class TelaChapa:
+import PySimpleGUI as sg
+from limite.tela_abstrata import TelaAbstrata
+
+
+class TelaChapa(TelaAbstrata):
     def __init__(self, controlador_chapa):
         self.__controlador_chapa = controlador_chapa
 
@@ -25,12 +29,34 @@ class TelaChapa:
         return id
 
     def cadastrar_chapa(self, lista):
-        nome = input("\nInsira aqui o nome da chapa: ").title().strip()
-        while len(nome) == 0:
-            nome = input("Inválido! Insira o nome novamente: ").title()
+        sg.ChangeLookAndFeel("DarkTeal4")
+        layout = [
+            [self.text('Cadastro de Chapa', fontSize=25)],
+            [self.text('Nome da chapa:'),
+             self.input_text('', key='nome')],
+            [self.text('ID da chapa:      '),
+             self.slider(key='id')],
+            [self.confirm_button(), self.cancel_button('Voltar')]
+        ]
+        self.window = sg.Window(
+            'Cadastro de chapas').Layout(layout)
+        button, values = self.window.Read()
+        if button == "Voltar":
+            self.window.Close()
+            return None
+        else:
+            nome = values["nome"].title().strip()
+            id = values["id"]
+            # nome = input("\nInsira aqui o nome da chapa: ")
+            # while len(nome) == 0:
+            #     nome = input("Inválido! Insira o nome novamente: ").title()
 
-        id = self.tratamento_id(lista, "Cadastro")
-        return {"nome": nome, "id": id}
+            # id = self.tratamento_id(lista, "Cadastro")
+            self.window.Close()
+            return {"nome": nome, "id": id}
+
+    def error(self, error):
+        self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
 
     def mostra_chapa(self, dados):
         if dados is None:

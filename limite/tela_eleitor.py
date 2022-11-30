@@ -2,45 +2,12 @@ from entidade.eleitor import TipoEleitor
 import PySimpleGUI as sg
 
 
-
 class TelaEleitor:
     def __init__(self, controlador_eleitores):
         self.__controlador_eleitores = controlador_eleitores
-        self.__window = None
-        self.init_components()
 
     def tela_eleitor_opcoes(self):
-        self.init_components()
-        button, values = self.__window.Read()
-        opcao = 0
-        if values['1']:
-            opcao = 1
-        elif values['2']:
-            opcao = 2
-        elif values['3']:
-            opcao = 3
-        elif values['4']:
-            opcao = 4
-        elif values['0'] or button in (None, 'Cancelar'):
-            opcao = 0
-        self.close()
-        return opcao
-
-    def init_components(self):
-        sg.ChangeLookAndFeel("DarkTeal4")
-        layout = [
-            [sg.Text("Eleitores", font=("Helvetica", 25))],
-            [sg.Radio("Cadastrar", "RD2", key="1")],
-            [sg.Radio("Alterar", "RD1", key="2")],
-            [sg.Radio("Consultar", "RD1", key="3")],
-            [sg.Radio("Excluir", "RD1", key="4")],
-            [sg.Radio("Voltar", "RD1", key="0")],
-            [sg.Button("Confirmar"), sg.Cancel("Cancelar")],
-        ]
-        self.__window = sg.Window("Eleições Reitoria").Layout(layout)
-
-    def close(self):
-        self.__window.Close()
+        return self.__controlador_eleitores.controlador_sistema.tela_sistema.menu_base("Eleitores")
 
     def cadastra_eleitor(self):
         nome = input("\nDigite o nome do eleitor: ").title().strip()

@@ -22,6 +22,15 @@ class ControladorChapas:
 
     def cadastra_chapa(self):
         chapa_dict = self.__tela_chapa.cadastrar_chapa(self.__chapas)
+        if chapa_dict is None:
+            return
+        elif len(chapa_dict["nome"]) == 0:
+            self.__tela_chapa.error("Nome inexistente!")
+            return
+        for chapa in self.__chapas:
+            if chapa_dict["id"] == chapa.id:
+                self.__tela_chapa.error("ID já cadastrado!")
+                return
         nova_chapa = Chapa(chapa_dict["nome"], chapa_dict["id"])
         self.__chapas.append(nova_chapa)
 
