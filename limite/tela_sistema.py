@@ -1,18 +1,43 @@
+import PySimpleGUI as sg
+
+
 class TelaSistema:
     def __init__(self, controlador_sistema):
         self.opcao_crud = 0
         self.__controlador_sistema = controlador_sistema
+        self.__window = None
+        self.init_components()
 
     def tela_principal(self):
-        print("\n")
-        print("-"*10, " Eleições Reitoria ", "-"*10)
-        print("1 - Chapas")
-        print("2 - Candidatos")
-        print("3 - Eleitores")
-        print("4 - Funções da urna")
-        print("0 - Sair")
-        opcao = int(input("\nEscolha sua opção: "))
+        self.init_components()
+        button, values = self.__window.Read()
+        opcao = 0
+        if values['1']:
+            opcao = 1
+        elif values['2']:
+            opcao = 2
+        elif values['3']:
+            opcao = 3
+        elif values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.close()
         return opcao
+
+    def init_components(self):
+        sg.ChangeLookAndFeel("DarkTeal4")
+        layout = [
+            [sg.Text("Eleições Reitoria", font=("Helvetica", 25))],
+            [sg.Radio("Chapas", "RD2", key="1")],
+            [sg.Radio("Candidatos", "RD1", key="2")],
+            [sg.Radio("Eleitores", "RD1", key="3")],
+            [sg.Radio("Funções da urna", "RD1", key="4")],
+            [sg.Radio("Sair", "RD1", key="0")],
+            [sg.Button("Confirmar"), sg.Cancel("Cancelar")],
+        ]
+        self.__window = sg.Window("Eleições Reitoria").Layout(layout)
+
+    def close(self):
+        self.__window.Close()
 
     def menu_base(self, menu):
         print("\n")
