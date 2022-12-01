@@ -9,29 +9,9 @@ class TelaChapa(TelaAbstrata):
     def tela_chapa_opcoes(self):
         return self.__controlador_chapa.controlador_sistema.tela_sistema.menu_base("Chapas")
 
-    def tratamento_id(self, lista, tipo):
-        while True:
-            try:
-                id = int(
-                    input("Digite um número de identificação da chapa (ID): "))
-                if tipo == "Cadastro":
-                    for chapa in lista:
-                        if id == chapa.id:
-                            print("ID já cadastrado!")
-                            break
-                    else:
-                        break
-                elif tipo == "Consulta":
-                    break
-
-            except ValueError:
-                print("\nO valor digitado não é válido. Tente novamente!")
-        return id
-
-    def cadastrar_chapa(self, lista):
-        sg.ChangeLookAndFeel("DarkTeal4")
+    def cadastrar_chapa(self):
         layout = [
-            [self.text('Cadastro de Chapa', fontSize=25)],
+            [self.text('Cadastro de chapa', fontSize=25)],
             [self.text('Nome da chapa:'),
              self.input_text('', key='nome')],
             [self.text('ID da chapa:      '),
@@ -47,11 +27,6 @@ class TelaChapa(TelaAbstrata):
         else:
             nome = values["nome"].title().strip()
             id = values["id"]
-            # nome = input("\nInsira aqui o nome da chapa: ")
-            # while len(nome) == 0:
-            #     nome = input("Inválido! Insira o nome novamente: ").title()
-
-            # id = self.tratamento_id(lista, "Cadastro")
             self.window.Close()
             return {"nome": nome, "id": id}
 
@@ -59,15 +34,54 @@ class TelaChapa(TelaAbstrata):
         self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
 
     def mostra_chapa(self, dados):
-        if dados is None:
-            print("Não foi possível encontrar a chapa desejada!")
+        if dados is not None:
+            dados_consultados = f"Nome cadastrado atualmente para a chapa: {dados.nome} \nID cadastrado atualmente para a chapa: {dados.id}"
+            self.window = sg.Popup(
+                dados_consultados, title="Dados da chapa consultada", font=("Helvetica", 18))
+
         else:
-            print("\nNome cadastrado atualmente para a chapa: ", dados.nome)
-            print("ID cadastrado atualmente para a chapa: ", dados.id)
+            self.error("Não foi possível encontrar a chapa desejada!")
 
-    def consultar_chapa(self, lista):
-        id = self.tratamento_id(lista, "Consulta")
-        return id
+    def alterar_chapa(self, chapa):
+        layout = [
+            [self.text('Alteração de chapa', fontSize=25)],
+            [self.text('Nome da chapa:'),
+             self.input_text(chapa.nome, key='nome')],
+            [self.text('ID da chapa:      '),
+             self.slider(value=chapa.id, key='id')],
+            [self.confirm_button(), self.cancel_button('Voltar')]
+        ]
+        self.window = sg.Window(
+            'Alteração de chapa').Layout(layout)
+        button, values = self.window.Read()
+        if button == "Voltar":
+            self.window.Close()
+            return None
+        else:
+            nome = values["nome"].title().strip()
+            id = values["id"]
+            self.window.Close()
+            return {"nome": nome, "id": id}
 
-    def exclui_chapa(self):
-        print("A chapa acima foi excluída com sucesso!")
+    def consultar_chapa(self):
+        layout = [
+            [self.text('Consulta de chapa', fontSize=25)],
+            [self.text('ID da chapa:      '),
+             self.slider(key='id')],
+            [self.confirm_button(), self.cancel_button('Voltar')]
+        ]
+        self.window = sg.Window(
+            'Consulta de chapas').Layout(layout)
+        button, values = self.window.Read()
+        if button == "Voltar":
+            self.window.Close()
+            return None
+        else:
+            id = values["id"]
+            self.window.Close()
+            return id
+
+    def exclui_chapa(self, dados):
+        dados_consultados = f"Essa chapa foi excluída:\n\nNome cadastrado para a chapa: {dados.nome} \nID cadastrado para a chapa: {dados.id}"
+        self.window = sg.Popup(
+            dados_consultados, title="Exclusão de chapa", font=("Helvetica", 18))

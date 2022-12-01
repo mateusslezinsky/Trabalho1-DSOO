@@ -19,8 +19,8 @@ class TelaAbstrata(ABC):
     def text(self, text, visible=True, fontSize=18):
         return sg.Text(text, visible=visible, font=("Helvetica", fontSize))
 
-    def input_radio(self, text, key, fontSize=18):
-        return sg.Radio(text, "RD1", key=key, font=("Helvetica", fontSize))
+    def input_radio(self, text, key, default=False, fontSize=18):
+        return sg.Radio(text, "RD1", default=default, key=key, font=("Helvetica", fontSize))
 
     def confirm_button(self):
         return sg.Button("Confirmar", button_color="green", font=("Helvetica", 18))
@@ -31,8 +31,8 @@ class TelaAbstrata(ABC):
     def input_text(self, data, key):
         return sg.InputText(data, key=key, font=("Helvetica", 18))
 
-    def slider(self, key=""):
-        return sg.Slider(range=(1, 100), orientation="h", default_value=1, key=key)
+    def slider(self, range=(1, 100), value=1, key=""):
+        return sg.Slider(range=range, orientation="h", default_value=value, key=key)
 
     def init_components(self, text_dict):
         sg.ChangeLookAndFeel("DarkTeal4")
@@ -46,4 +46,4 @@ class TelaAbstrata(ABC):
             [self.confirm_button(),
              self.cancel_button(text_dict["key0"])],
         ]
-        self.__window = sg.Window("Eleições Reitoria").Layout(layout)
+        self.__window = sg.Window(text_dict["title"]).Layout(layout)

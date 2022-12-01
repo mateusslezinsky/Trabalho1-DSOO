@@ -21,7 +21,7 @@ class ControladorChapas:
         self.__chapas = chapas
 
     def cadastra_chapa(self):
-        chapa_dict = self.__tela_chapa.cadastrar_chapa(self.__chapas)
+        chapa_dict = self.__tela_chapa.cadastrar_chapa()
         if chapa_dict is None:
             return
         elif len(chapa_dict["nome"]) == 0:
@@ -35,34 +35,34 @@ class ControladorChapas:
         self.__chapas.append(nova_chapa)
 
     def altera_chapa(self):
-        chapa_consultada = self.consulta_chapa()
+        chapa_consultada = self.consulta_chapa(mostrar=False)
         if chapa_consultada is not None:
-            dados_tela_chapa = self.__tela_chapa.cadastrar_chapa(self.__chapas)
+            dados_tela_chapa = self.__tela_chapa.alterar_chapa(
+                chapa_consultada)
             for chapa in self.__chapas:
                 if chapa.id == chapa_consultada.id:
                     chapa.nome = dados_tela_chapa["nome"]
                     chapa.id = dados_tela_chapa["id"]
 
     def consulta_chapa(self, mostrar=True):
-        id_a_consultar = self.__tela_chapa.consultar_chapa(self.__chapas)
-        if len(self.__chapas) > 0:
-            for chapa in self.__chapas:
-                if chapa.id == id_a_consultar:
-                    if mostrar:
-                        self.__tela_chapa.mostra_chapa(chapa)
-                    return chapa
-            else:
-                self.__tela_chapa.mostra_chapa(None)
+        id_a_consultar = self.__tela_chapa.consultar_chapa()
+        if id_a_consultar is None:
+            return
+        for chapa in self.__chapas:
+            if chapa.id == id_a_consultar:
+                if mostrar:
+                    self.__tela_chapa.mostra_chapa(chapa)
+                return chapa
         else:
             self.__tela_chapa.mostra_chapa(None)
 
     def exclui_chapa(self):
-        chapa_consultada = self.consulta_chapa()
+        chapa_consultada = self.consulta_chapa(mostrar=False)
         if chapa_consultada is not None:
             for chapa in self.__chapas:
                 if chapa.id == chapa_consultada.id:
                     self.__chapas.remove(chapa)
-                    self.__tela_chapa.exclui_chapa()
+                    self.__tela_chapa.exclui_chapa(chapa)
 
     def abre_tela(self):
         self.__controlador_sistema.tela_crud(

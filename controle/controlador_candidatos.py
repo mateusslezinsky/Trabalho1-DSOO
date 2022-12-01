@@ -75,6 +75,15 @@ class ControladorCandidatos:
 
     def cadastra_candidato(self):
         candidato = self.__tela_candidato.cadastrar_candidato()
+        if candidato is None:
+            return
+        elif len(candidato["nome"]) == 0:
+            self.__tela_candidato.error("Nome inexistente!")
+            return
+        for candidato_loop in self.__candidatos:
+            if candidato["numero"] == candidato_loop.numero:
+                self.__tela_candidato.error("Número já cadastrado!")
+                return
         cadastra_ou_nao = self.considera_segundo_turno(candidato)
         objeto_chapa = self.__controlador_chapas.consulta_chapa(
             mostrar=False)
@@ -105,9 +114,10 @@ class ControladorCandidatos:
                         pro_reitor_a_cadastrar)
 
     def altera_candidato(self):
-        candidato_consultado = self.consulta_candidato()
+        candidato_consultado = self.consulta_candidato(mostrar=False)
         if candidato_consultado is not None:
-            dados_candidato = self.__tela_candidato.cadastrar_candidato()
+            dados_candidato = self.__tela_candidato.altera_candidato(
+                candidato_consultado)
             config_segundo_turno = self.considera_segundo_turno(
                 dados_candidato)
             objeto_chapa = self.controlador_chapas.consulta_chapa(
@@ -126,6 +136,8 @@ class ControladorCandidatos:
 
     def consulta_candidato(self, mostrar=True):
         numero_consultado = self.tela_candidato.consulta_candidato()
+        if numero_consultado is None:
+            return
         for candidato in self.__candidatos:
             if candidato.numero == numero_consultado:
                 if mostrar:
@@ -137,12 +149,12 @@ class ControladorCandidatos:
                 None)
 
     def exclui_candidato(self):
-        candidato_consultado = self.consulta_candidato()
+        candidato_consultado = self.consulta_candidato(mostrar=False)
         if candidato_consultado is not None:
             for candidato in self.__candidatos:
                 if candidato.numero == candidato_consultado.numero:
                     self.__candidatos.remove(candidato)
-                    self.__tela_candidato.remove_candidato()
+                    self.__tela_candidato.remove_candidato(candidato)
 
     def considera_segundo_turno(self, dados_candidato):
         if self.__controlador_sistema.controlador_urna.segundo_turno:
