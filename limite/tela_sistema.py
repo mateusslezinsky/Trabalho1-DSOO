@@ -15,6 +15,7 @@ class TelaSistema(TelaAbstrata):
             "key2": "Candidatos",
             "key3": "Eleitores",
             "key4": "Funções da Urna",
+            "key5": "",
             "key0": "Sair",
         })
         button, values = self.window.Read()
@@ -42,6 +43,7 @@ class TelaSistema(TelaAbstrata):
             "key2": "Alterar",
             "key3": "Consultar",
             "key4": "Excluir",
+            "key5": "",
             "key0": "Voltar"
         })
         button, values = self.window.Read()

@@ -1,22 +1,49 @@
 from entidade.reitor import Reitor
 from entidade.pro_reitor import ProReitor, TipoProReitor
+from limite.tela_abstrata import TelaAbstrata
 
 
-class TelaUrna:
+class TelaUrna(TelaAbstrata):
     def __init__(self, controlador_urna):
+        super().__init__()
         self.__controlador_urna = controlador_urna
 
     def tela_principal(self):
-        print("\n")
-        print("-"*10, "Urna", "-"*10)
-        print("1 - Homologação de urna")
-        print("2 - Votar")
-        print("3 - Encerrar votação")
-        print("4 - Resultados")
-        print("5 - Definir turno")
-        print("0 - Voltar")
-        opcao = int(input("\nEscolha sua opção: "))
+        self.init_components({
+            "title": "Urna",
+            "key1": "Homologação de urna",
+            "key2": "Votar",
+            "key3": "Encerrar votação",
+            "key4": "Resultados",
+            "key5": "Definir turno",
+            "key0": "Voltar",
+        })
+        button, values = self.window.Read()
+        opcao = 0
+        if values['1']:
+            opcao = 1
+        elif values['2']:
+            opcao = 2
+        elif values['3']:
+            opcao = 3
+        elif values['4']:
+            opcao = 4
+        elif values['5']:
+            opcao = 5
+        elif values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.window.Close()
         return opcao
+        # print("\n")
+        # print("-"*10, "Urna", "-"*10)
+        # print("1 - Homologação de urna")
+        # print("2 - Votar")
+        # print("3 - Encerrar votação")
+        # print("4 - Resultados")
+        # print("5 - Definir turno")
+        # print("0 - Voltar")
+        # opcao = int(input("\nEscolha sua opção: "))
+        # return opcao
 
     def imprime_mensagem(self, mensagem):
         print(mensagem)

@@ -36,12 +36,17 @@ class TelaAbstrata(ABC):
 
     def init_components(self, text_dict):
         sg.ChangeLookAndFeel("DarkTeal4")
+
+        v = [self.input_radio(text_dict["key5"], key="5")
+             if text_dict["key5"] else []]
+
         layout = [
             [self.text(text_dict["title"], fontSize=25)],
             [self.input_radio(text_dict["key1"], key="1")],
             [self.input_radio(text_dict["key2"], key="2")],
             [self.input_radio(text_dict["key3"], key="3")],
             [self.input_radio(text_dict["key4"], key="4")],
+            v,
             [self.input_radio(text_dict["key0"], key="0")],
             [self.confirm_button(),
              self.cancel_button(text_dict["key0"])],
