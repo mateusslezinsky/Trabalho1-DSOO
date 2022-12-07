@@ -44,13 +44,13 @@ class TelaUrna(TelaAbstrata):
         confirma = False
         layout = [
             [self.text('Votação', fontSize=25)],
-            [self.text('Número do reitor:                      '),
+            [self.text('Número do reitor:                                  '),
                 self.input_text(data="", key='reitor')],
             [self.text('Número do pró-reitor de graduação:     '),
                 self.input_text(data="", key='pro_grad')],
-            [self.text('Número do pró-reitor de extensão:      '),
+            [self.text('Número do pró-reitor de extensão:       '),
                 self.input_text(data="", key='pro_ext')],
-            [self.text('Número do pró-reitor de pesquisa:      '),
+            [self.text('Número do pró-reitor de pesquisa:       '),
                 self.input_text(data="", key='pro_pesquisa')],
             [self.confirm_button(), self.cancel_button('Voltar')]
         ]

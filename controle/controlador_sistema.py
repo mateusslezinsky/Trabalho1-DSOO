@@ -65,9 +65,6 @@ class ControladorSistema:
                 self.__tela_sistema.lida_com_erro()
 
     def redefine_sistema(self):
-        self.__controlador_candidatos.candidatos = []
-        self.__controlador_eleitores.eleitores = []
-        self.__controlador_chapas.chapas = []
         self.__controlador_urna.urna = None
         self.__controlador_urna.votacao_encerrada = False
         self.__controlador_urna.resultados_calculados = False

@@ -64,8 +64,10 @@ class TelaSistema(TelaAbstrata):
         return opcao
 
     def lida_com_erro(self):
-        print("\nDigite uma opção válida!")
+        sg.Popup("Digite uma opção válida!",
+                 title="Erro", font=("Helvetica", 18))
 
+    # Excluir depois da tela eleitor ser implementada
     def verifica_int(self, mensagem):
         while True:
             try:
@@ -77,4 +79,4 @@ class TelaSistema(TelaAbstrata):
 
     def mensagem_redefine_sistema(self):
         self.window = sg.Popup(
-            "O sistema e a urna foram redefinidos", title="Mensagem", font=("Helvetica", 18))
+            "A urna foi redefinida", title="Mensagem", font=("Helvetica", 18))

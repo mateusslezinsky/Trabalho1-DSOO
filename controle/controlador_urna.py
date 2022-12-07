@@ -75,7 +75,7 @@ class ControladorUrna:
                 and quantidade_pro_ext > 0 \
                 and quantidade_pro_pesquisa > 0:
             if self.__urna is None:
-                urna = Urna(self.__controlador_candidatos.candidatos,
+                urna = Urna(self.__controlador_candidatos.candidatos.get_all(),
                             self.__controlador_eleitores.eleitores)
                 self.__urna = urna
                 self.__urna.homologada = True
@@ -118,6 +118,8 @@ class ControladorUrna:
                             break
                     else:
                         dados_voto = self.__tela_urna.obtem_dados_voto()
+                        if dados_voto is None:
+                            return
                         reitor = self.consulta_dados(dados_voto["reitor"])
                         pro_grad = self.consulta_dados(dados_voto["pro_grad"])
                         pro_ext = self.consulta_dados(dados_voto["pro_ext"])

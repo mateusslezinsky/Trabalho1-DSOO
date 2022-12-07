@@ -1,4 +1,5 @@
 from entidade.pro_reitor import ProReitor, TipoProReitor
+from entidade.reitor import Reitor
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 
@@ -38,6 +39,7 @@ class TelaCandidato(TelaAbstrata):
             opcao = 1
         elif values['2']:
             opcao = 2
+        self.window.Close()
         return opcao
 
     def cadastrar_candidato(self):
@@ -217,7 +219,8 @@ class TelaCandidato(TelaAbstrata):
             candidato, extra="O candidato abaixo foi excluído:\n\n")
 
     def imprime_resposta_segundo_turno(self):
-        print("O candidato não foi cadastrado/modificado. Motivo: segundo turno")
+        self.error(
+            "O candidato não foi cadastrado/modificado. Motivo: segundo turno")
 
     def error(self, error):
         self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
