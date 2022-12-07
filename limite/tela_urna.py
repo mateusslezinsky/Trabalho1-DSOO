@@ -1,6 +1,7 @@
 from entidade.reitor import Reitor
 from entidade.pro_reitor import ProReitor, TipoProReitor
 from limite.tela_abstrata import TelaAbstrata
+import PySimpleGUI as sg
 
 
 class TelaUrna(TelaAbstrata):
@@ -34,55 +35,76 @@ class TelaUrna(TelaAbstrata):
             opcao = 0
         self.window.Close()
         return opcao
-        # print("\n")
-        # print("-"*10, "Urna", "-"*10)
-        # print("1 - Homologação de urna")
-        # print("2 - Votar")
-        # print("3 - Encerrar votação")
-        # print("4 - Resultados")
-        # print("5 - Definir turno")
-        # print("0 - Voltar")
-        # opcao = int(input("\nEscolha sua opção: "))
-        # return opcao
 
     def imprime_mensagem(self, mensagem):
-        print(mensagem)
+        self.window = sg.Popup(
+            mensagem, title="Mensagem", font=("Helvetica", 18))
 
     def obtem_dados_voto(self):
-        reitor = input(
-            "\nDigite o número do reitor que deseja votar: ")
-        reitor = self.confirma_voto(reitor, "reitor")
-        pro_grad = input(
-            "Digite o número do pró-reitor de graduação que deseja votar: ")
-        pro_grad = self.confirma_voto(pro_grad, "pró-reitor de graduação")
-
-        pro_ext = input(
-            "Digite o número do pró-reitor de extensão que deseja votar: ")
-        pro_ext = self.confirma_voto(pro_ext, "pró-reitor de extensão")
-        pro_pesquisa = input(
-            "Digite o número do pró-reitor de pesquisa que deseja votar: ")
-        pro_pesquisa = self.confirma_voto(
-            pro_pesquisa, "pró-reitor de pesquisa")
-
+        confirma = False
+        layout = [
+            [self.text('Votação', fontSize=25)],
+            [self.text('Número do reitor:                      '),
+                self.input_text(data="", key='reitor')],
+            [self.text('Número do pró-reitor de graduação:     '),
+                self.input_text(data="", key='pro_grad')],
+            [self.text('Número do pró-reitor de extensão:      '),
+                self.input_text(data="", key='pro_ext')],
+            [self.text('Número do pró-reitor de pesquisa:      '),
+                self.input_text(data="", key='pro_pesquisa')],
+            [self.confirm_button(), self.cancel_button('Voltar')]
+        ]
+        self.window = sg.Window(
+            'Votação').Layout(layout)
+        while True:
+            button, values = self.window.Read()
+            if button in (None, 'Voltar'):
+                self.window.Close()
+                return None
+            reitor = values["reitor"]
+            pro_grad = values["pro_grad"]
+            pro_ext = values["pro_ext"]
+            pro_pesquisa = values["pro_pesquisa"]
+            confirma = self.confirma_voto()
+            if confirma:
+                break
+        self.window.Close()
         return {"reitor": reitor, "pro_grad": pro_grad,
                 "pro_ext": pro_ext, "pro_pesquisa": pro_pesquisa}
 
-    def confirma_voto(self, candidato, nome="candidato"):
-        confirmacao = input("Confirma o voto? (S/N): ").upper()
-        while confirmacao == "N" or confirmacao != "S":
-            candidato = input(
-                f"Digite novamente o número do {nome} que deseja votar: ")
-            confirmacao = input("Confirma o voto? (S/N): ").upper()
-        return candidato
+    def confirma_voto(self):
+        layout = [
+            [self.text('Confirma o voto?', fontSize=25)],
+            [self.confirm_button(), self.confirm_button('Corrigir', color="red")]
+        ]
+        window = sg.Window(
+            'Confirmação de voto').Layout(layout)
+        button, values = window.Read()
+        if button in (None, 'Corrigir'):
+            window.Close()
+            return False
+        window.Close()
+        return True
 
     def define_segundo_turno(self):
-        print("\n")
-        print("-"*10, "Escolha de turno", "-"*10)
-        print("1 - Primeiro turno")
-        print("2 - Segundo turno")
-        opcao = int(input("\nEscolha sua opção: "))
-        while opcao != 1 and opcao != 2:
-            opcao = int(input("Inválido! Escolha sua opção novamente: "))
+        self.init_components({
+            "title": "Definição de Turno",
+            "key1": "Primeiro Turno",
+            "key2": "Segundo Turno",
+            "key3": "",
+            "key4": "",
+            "key5": "",
+            "key0": "Voltar",
+        })
+        button, values = self.window.Read()
+        opcao = 0
+        if values['1']:
+            opcao = 1
+        elif values['2']:
+            opcao = 2
+        elif values['0'] or button in (None, 'Cancelar'):
+            opcao = 0
+        self.window.Close()
         return opcao
 
     def escreve_resultados(self, candidatos):

@@ -225,4 +225,6 @@ class ControladorUrna:
             self.__segundo_turno = False
         elif resposta == 2:
             self.__segundo_turno = True
+        elif resposta == 0:
+            return
         self.__controlador_sistema.redefine_sistema()

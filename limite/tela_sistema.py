@@ -76,4 +76,5 @@ class TelaSistema(TelaAbstrata):
         return variavel
 
     def mensagem_redefine_sistema(self):
-        print("O sistema e a urna foram redefinidos")
+        self.window = sg.Popup(
+            "O sistema e a urna foram redefinidos", title="Mensagem", font=("Helvetica", 18))

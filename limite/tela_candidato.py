@@ -31,14 +31,13 @@ class TelaCandidato(TelaAbstrata):
             self.window = sg.Window(
                 'Exclusão').Layout(layout)
         button, values = self.window.Read()
-        if button == "Voltar":
+        opcao = 0
+        if values['0'] or button in (None, 'Voltar'):
             opcao = 0
         elif values['1']:
             opcao = 1
         elif values['2']:
             opcao = 2
-        elif values['0']:
-            opcao = 0
         return opcao
 
     def cadastrar_candidato(self):
@@ -70,7 +69,7 @@ class TelaCandidato(TelaAbstrata):
         self.window = sg.Window(
             'Cadastro de candidato').Layout(layout)
         button, values = self.window.Read()
-        if button == "Voltar":
+        if button in (None, 'Voltar'):
             self.window.Close()
             return None
         else:
@@ -159,7 +158,7 @@ class TelaCandidato(TelaAbstrata):
         self.window = sg.Window(
             'Alteração de candidato').Layout(layout)
         button, values = self.window.Read()
-        if button == "Voltar":
+        if button in (None, 'Voltar'):
             self.window.Close()
             return None
         else:
@@ -186,7 +185,7 @@ class TelaCandidato(TelaAbstrata):
         self.window = sg.Window(
             'Consulta de candidato').Layout(layout)
         button, values = self.window.Read()
-        if button == "Voltar":
+        if button in (None, 'Voltar'):
             self.window.Close()
             return None
         else:

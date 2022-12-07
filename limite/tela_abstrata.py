@@ -22,8 +22,8 @@ class TelaAbstrata(ABC):
     def input_radio(self, text, key, default=False, fontSize=18):
         return sg.Radio(text, "RD1", default=default, key=key, font=("Helvetica", fontSize))
 
-    def confirm_button(self):
-        return sg.Button("Confirmar", button_color="green", font=("Helvetica", 18))
+    def confirm_button(self, text="Confirmar", color="green"):
+        return sg.Button(text, button_color=color, font=("Helvetica", 18))
 
     def cancel_button(self, cancel_text="Sair"):
         return sg.Cancel(cancel_text, button_color="red", font=("Helvetica", 18))
@@ -37,16 +37,16 @@ class TelaAbstrata(ABC):
     def init_components(self, text_dict):
         sg.ChangeLookAndFeel("DarkTeal4")
 
-        v = [self.input_radio(text_dict["key5"], key="5")
-             if text_dict["key5"] else []]
-
         layout = [
             [self.text(text_dict["title"], fontSize=25)],
             [self.input_radio(text_dict["key1"], key="1")],
             [self.input_radio(text_dict["key2"], key="2")],
-            [self.input_radio(text_dict["key3"], key="3")],
-            [self.input_radio(text_dict["key4"], key="4")],
-            v,
+            [self.input_radio(text_dict["key3"], key="3")
+             if text_dict["key3"] else []],
+            [self.input_radio(text_dict["key4"], key="4")
+             if text_dict["key4"] else []],
+            [self.input_radio(text_dict["key5"], key="5")
+             if text_dict["key5"] else []],
             [self.input_radio(text_dict["key0"], key="0")],
             [self.confirm_button(),
              self.cancel_button(text_dict["key0"])],
