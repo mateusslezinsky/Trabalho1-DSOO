@@ -40,6 +40,12 @@ class ControladorChapas:
         if chapa_consultada is not None:
             dados_tela_chapa = self.__tela_chapa.alterar_chapa(
                 chapa_consultada)
+            for chapa_loop in self.__chapas.get_all():
+                if chapa_consultada.id == dados_tela_chapa["id"]:
+                    break
+                elif dados_tela_chapa["id"] == chapa_loop.id:
+                    self.__tela_chapa.error("Número já cadastrado!")
+                    return
             for chapa in list(self.__chapas.get_all()):
                 if chapa.id == chapa_consultada.id:
                     self.__chapas.remove(chapa.id)

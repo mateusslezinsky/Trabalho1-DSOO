@@ -4,6 +4,7 @@ from limite.tela_urna import TelaUrna
 from entidade.reitor import Reitor
 from entidade.pro_reitor import ProReitor, TipoProReitor
 from entidade.voto import Voto
+from persistencia.urnaDAO import UrnaDAO
 
 
 class ControladorUrna:
@@ -13,9 +14,11 @@ class ControladorUrna:
         self.__controlador_eleitores = controlador_eleitores
         self.__tela_urna = TelaUrna(self)
         self.__urna = None
-        self.__votacao_encerrada = False
-        self.__resultados_calculados = False
         self.__segundo_turno = False
+
+    @property
+    def segundo_turno(self):
+        return self.__segundo_turno
 
     @property
     def tela_urna(self):
@@ -28,26 +31,6 @@ class ControladorUrna:
     @urna.setter
     def urna(self, urna):
         self.__urna = urna
-
-    @property
-    def votacao_encerrada(self):
-        return self.__votacao_encerrada
-
-    @property
-    def resultados_calculados(self):
-        return self.__resultados_calculados
-
-    @votacao_encerrada.setter
-    def votacao_encerrada(self, votacao_encerrada):
-        self.__votacao_encerrada = votacao_encerrada
-
-    @resultados_calculados.setter
-    def resultados_calculados(self, resultados_calculados):
-        self.__resultados_calculados = resultados_calculados
-
-    @property
-    def segundo_turno(self):
-        return self.__segundo_turno
 
     @property
     def controlador_sistema(self):
@@ -79,7 +62,7 @@ class ControladorUrna:
                             self.__controlador_eleitores.eleitores)
                 self.__urna = urna
                 self.__urna.homologada = True
-                self.__votacao_encerrada = False
+                self.__urna.votacao_encerrada = False
                 self.__tela_urna.imprime_mensagem(
                     "A urna foi homologada com sucesso. O voto pode ser realizado.")
                 return
@@ -106,7 +89,7 @@ class ControladorUrna:
             self.__tela_urna.imprime_mensagem(
                 "Para realizar a votação é necessário que a urna esteja homologada!")
         else:
-            if self.__votacao_encerrada:
+            if self.__urna.votacao_encerrada:
                 self.__tela_urna.imprime_mensagem("A votação está encerrada!")
             else:
                 eleitor_consultado = self.__controlador_eleitores.consulta_eleitor()
@@ -160,8 +143,8 @@ class ControladorUrna:
         return proporcao * 100
 
     def calcula_resultado(self):
-        if self.__votacao_encerrada and self.__urna is not None:
-            if self.__resultados_calculados is False:
+        if self.__urna is not None and self.__urna.votacao_encerrada:
+            if self.__urna.resultados_calculados is False:
                 for voto in self.__urna.votos:
                     proporcao = self.obtem_proporcao(voto)
                     for candidato in self.__urna.candidatos:
@@ -197,7 +180,7 @@ class ControladorUrna:
                 self.__tela_urna.escreve_quantidades()
                 self.__tela_urna.escreve_resultados(
                     [reitor_vencendo, pro_grad_vencendo, pro_ext_vencendo, pro_pesquisa_vencendo])
-                self.__resultados_calculados = True
+                self.__urna.resultados_calculados = True
                 self.__tela_urna.imprime_mensagem(
                     "Os resultados foram escritos para o arquivo resultados.txt.")
                 self.__tela_urna.imprime_mensagem(
@@ -212,11 +195,11 @@ class ControladorUrna:
 
     def encerra_votacao(self):
         if self.__urna is not None and len(self.__urna.votos) > 0:
-            if self.__votacao_encerrada:
+            if self.__urna.votacao_encerrada:
                 self.__tela_urna.imprime_mensagem(
                     "A votação já está encerrada!")
             else:
-                self.__votacao_encerrada = True
+                self.__urna.votacao_encerrada = True
                 self.__tela_urna.imprime_mensagem("Votação encerrada!")
         else:
             self.__tela_urna.imprime_mensagem("Não há votos na urna!")

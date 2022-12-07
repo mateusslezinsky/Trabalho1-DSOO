@@ -114,6 +114,12 @@ class ControladorCandidatos:
                 candidato_consultado)
             if dados_candidato is None:
                 return
+            for candidato_loop in self.__candidatos.get_all():
+                if candidato_consultado.numero == dados_candidato["numero"]:
+                    break
+                elif dados_candidato["numero"] == candidato_loop.numero:
+                    self.__tela_candidato.error("Número já cadastrado!")
+                    return
             config_segundo_turno = self.considera_segundo_turno(
                 dados_candidato)
             objeto_chapa = self.controlador_chapas.consulta_chapa(

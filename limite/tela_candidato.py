@@ -1,5 +1,4 @@
 from entidade.pro_reitor import ProReitor, TipoProReitor
-from entidade.reitor import Reitor
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 

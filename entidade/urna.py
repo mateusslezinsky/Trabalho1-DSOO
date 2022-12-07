@@ -1,12 +1,14 @@
 class Urna:
-    def __init__(self, candidatos, eleitores: list):
+    def __init__(self, candidatos: list, eleitores: list):
         self.__candidatos = candidatos
         self.__eleitores = eleitores
         self.__homologada = False
-        self.__turno = 1
+        self.__votacao_encerrada = False
+        self.__resultados_calculados = False
         self.__votos = []
         self.__eleitores_votaram = []
         self.__quantidade_votos_invalidos = 0
+        self.id = 1
 
     @property
     def candidatos(self) -> list:
@@ -29,14 +31,6 @@ class Urna:
         self.__homologada = homologada
 
     @property
-    def turno(self) -> int:
-        return self.__turno
-
-    @turno.setter
-    def turno(self, turno):
-        self.__turno = turno
-
-    @property
     def quantidade_votos_invalidos(self) -> int:
         return self.__quantidade_votos_invalidos
 
@@ -47,3 +41,19 @@ class Urna:
     @property
     def eleitores_votaram(self) -> list:
         return self.__eleitores_votaram
+
+    @property
+    def votacao_encerrada(self):
+        return self.__votacao_encerrada
+
+    @votacao_encerrada.setter
+    def votacao_encerrada(self, votacao_encerrada):
+        self.__votacao_encerrada = votacao_encerrada
+
+    @property
+    def resultados_calculados(self):
+        return self.__resultados_calculados
+
+    @resultados_calculados.setter
+    def resultados_calculados(self, resultados_calculados):
+        self.__resultados_calculados = resultados_calculados
