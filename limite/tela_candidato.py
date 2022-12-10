@@ -86,50 +86,7 @@ class TelaCandidato(TelaAbstrata):
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.PESQUISA.value
             self.window.Close()
             return dados_basicos
-        # nome = input("Digite o nome do candidato: ").title().strip()
-        # while len(nome) == 0:
-        #     nome = input("Inválido! Insira o nome novamente: ").title()
-        # numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-        #     "Digite o número do candidato (1-98): ")
-        # while not 1 <= numero <= 98:
-        #     numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-        #         "Digite um número válido para o candidato: ")
 
-        # while self.__controlador_candidatos.checa_se_ja_existe(numero, self.__controlador_candidatos.candidatos):
-        #     numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-        #         "Já existe! Digite um outro número pro candidato: ")
-
-        #     while not 1 <= numero <= 98:
-        #         numero = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-        #             "Digite um número válido para o candidato: ")
-
-        # dados_basicos = {"nome": nome, "numero": numero}
-
-        #     print("\nEscolha um tipo de pró reitor, sendo:")
-        #     print("1 - Graduação")
-        #     print("2 - Extensão")
-        #     print("3 - Pesquisa")
-        #     tipo_pro_reitor = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-        #         "\nEscolha a sua opção: ")
-
-        #     def verifica_tipo():
-        #         for tipo in TipoProReitor:
-        #             if tipo.value == tipo_pro_reitor:
-        #                 return True
-        #         else:
-        #             return False
-
-        #     while True:
-        #         resultado = verifica_tipo()
-        #         if resultado:
-        #             break
-        #         else:
-        #             tipo_pro_reitor = self.__controlador_candidatos.controlador_sistema.tela_sistema.verifica_int(
-        #                 "Inválido! Escolha a sua opção novamente: ")
-
-        #     dados_basicos["tipo_pro_reitor"] = tipo_pro_reitor
-
-        # return dados_basicos
     def altera_candidato(self, candidato):
         if self.__controlador_candidatos.opcao_tipo_candidato == 1:
             layout = [
