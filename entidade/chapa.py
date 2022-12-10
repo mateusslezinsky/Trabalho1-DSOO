@@ -3,6 +3,9 @@ class Chapa:
         self.__nome = nome
         self.__id = id
 
+    def __lt__(self, other):
+        return self.__id < other.id
+
     @property
     def nome(self):
         return self.__nome

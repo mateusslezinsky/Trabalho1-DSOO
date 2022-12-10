@@ -18,7 +18,7 @@ class TelaEleitor(TelaAbstrata):
              self.input_text('', key='nome')],
             [self.text('CPF:  '),
              self.input_text('', key='cpf')],
-            [self.text('Categoria:')],
+            [self.text('Tipo de eleitor:')],
             [self.input_radio('Aluno', key="1", default=True)],
             [self.input_radio('Professor', key="2")],
             [self.input_radio('Servidor', key="3")],
@@ -85,9 +85,12 @@ class TelaEleitor(TelaAbstrata):
              self.input_text(eleitor.nome, key='nome')],
             [self.text('CPF:  '),
              self.input_text(eleitor.cpf, key='cpf')],
-            [self.input_radio('Aluno', key="1", default=(True if eleitor.tipo_eleitor == TipoEleitor.ALUNO.value else False))],
-            [self.input_radio('Professor', key="2", default=(True if eleitor.tipo_eleitor == TipoEleitor.PROFESSOR.value else False))],
-            [self.input_radio('Servidor', key="3", default=(True if eleitor.tipo_eleitor == TipoEleitor.SERVIDOR.value else False))],
+            [self.input_radio('Aluno', key="1", default=(
+                True if eleitor.tipo_eleitor == TipoEleitor.ALUNO.value else False))],
+            [self.input_radio('Professor', key="2", default=(
+                True if eleitor.tipo_eleitor == TipoEleitor.PROFESSOR.value else False))],
+            [self.input_radio('Servidor', key="3", default=(
+                True if eleitor.tipo_eleitor == TipoEleitor.SERVIDOR.value else False))],
             [self.confirm_button(), self.cancel_button('Voltar')]
         ]
         self.window = sg.Window('Alteração de eleitor').Layout(layout)
@@ -114,3 +117,19 @@ class TelaEleitor(TelaAbstrata):
 
     def error(self, error):
         self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
+
+    def mostrar_todos(self):
+        dados_consultados = ""
+        divider = "-"*50
+        total = 0
+        for index, eleitor in enumerate(sorted(self.__controlador_eleitores.eleitores.get_all())):
+            if eleitor.tipo_eleitor == TipoEleitor.ALUNO.value:
+                dados_consultados += f"\n{index+1} - Eleitor de nome: {eleitor.nome}\n CPF: {eleitor.cpf}\n Tipo do eleitor: Aluno\n{divider}"
+            elif eleitor.tipo_eleitor == TipoEleitor.PROFESSOR.value:
+                dados_consultados += f"\n{index+1} - Eleitor de nome: {eleitor.nome}\n CPF: {eleitor.cpf}\n Tipo do eleitor: Professor\n{divider}"
+            elif eleitor.tipo_eleitor == TipoEleitor.SERVIDOR.value:
+                dados_consultados += f"\n{index+1} - Eleitor de nome: {eleitor.nome}\n CPF: {eleitor.cpf}\n Tipo do eleitor: Servidor\n{divider}"
+
+            total = index + 1
+        self.window = sg.Popup(
+            dados_consultados + f"\nO total cadastrado é: {total}", title="Consulta de todas os eleitores", font=("Helvetica", 18))

@@ -64,6 +64,7 @@ class ControladorCandidatos:
              "alterar": self.escolhe_tipo_candidato,
              "consultar": self.escolhe_tipo_candidato,
              "excluir": self.escolhe_tipo_candidato,
+             "mostrar_todos": self.mostrar_todos,
              "tela": self.__tela_candidato.tela_candidato_opcoes
              })
 
@@ -88,7 +89,7 @@ class ControladorCandidatos:
                     return
                 else:
                     reitor_a_cadastrar = Reitor(
-                        candidato["nome"], candidato["numero"], objeto_chapa)
+                        candidato["nome"], int(candidato["numero"]), objeto_chapa)
                     self.__candidatos.add(reitor_a_cadastrar)
             elif self.opcao_tipo_candidato == 2:
                 if cadastra_ou_nao:
@@ -97,13 +98,13 @@ class ControladorCandidatos:
                 else:
                     if candidato["tipo_pro_reitor"] == 1:
                         pro_reitor_a_cadastrar = ProReitor(
-                            candidato["nome"], candidato["numero"], objeto_chapa, TipoProReitor.GRADUACAO.value)
+                            candidato["nome"], int(candidato["numero"]), objeto_chapa, TipoProReitor.GRADUACAO.value)
                     elif candidato["tipo_pro_reitor"] == 2:
                         pro_reitor_a_cadastrar = ProReitor(
-                            candidato["nome"], candidato["numero"], objeto_chapa, TipoProReitor.EXTENSAO.value)
+                            candidato["nome"], int(candidato["numero"]), objeto_chapa, TipoProReitor.EXTENSAO.value)
                     elif candidato["tipo_pro_reitor"] == 3:
                         pro_reitor_a_cadastrar = ProReitor(
-                            candidato["nome"], candidato["numero"], objeto_chapa, TipoProReitor.PESQUISA.value)
+                            candidato["nome"], int(candidato["numero"]), objeto_chapa, TipoProReitor.PESQUISA.value)
                     self.__candidatos.add(
                         pro_reitor_a_cadastrar)
 
@@ -115,7 +116,7 @@ class ControladorCandidatos:
             if dados_candidato is None:
                 return
             for candidato_loop in self.__candidatos.get_all():
-                if candidato_consultado.numero == dados_candidato["numero"]:
+                if candidato_consultado.numero == int(dados_candidato["numero"]):
                     break
                 elif dados_candidato["numero"] == candidato_loop.numero:
                     self.__tela_candidato.error("Número já cadastrado!")
@@ -130,13 +131,13 @@ class ControladorCandidatos:
                         self.__candidatos.remove(candidato.numero)
                         if self.opcao_tipo_candidato == 1:
                             candidato_a_alterar = Reitor(
-                                dados_candidato["nome"], dados_candidato["numero"], objeto_chapa)
+                                dados_candidato["nome"], int(dados_candidato["numero"]), objeto_chapa)
                         if self.opcao_tipo_candidato == 2:
                             if config_segundo_turno:
                                 self.__tela_candidato.imprime_resposta_segundo_turno()
                             else:
                                 candidato_a_alterar = ProReitor(
-                                    dados_candidato["nome"], dados_candidato["numero"], objeto_chapa, dados_candidato["tipo_pro_reitor"])
+                                    dados_candidato["nome"], int(dados_candidato["numero"]), objeto_chapa, dados_candidato["tipo_pro_reitor"])
                         self.__candidatos.add(candidato_a_alterar)
 
     def consulta_candidato(self, mostrar=True):
@@ -208,3 +209,6 @@ class ControladorCandidatos:
                 elif candidato.tipo_pro_reitor == TipoProReitor.PESQUISA.value:
                     quantidade_pro_pesquisa += 1
         return quantidade_reitor, quantidade_pro_grad, quantidade_pro_ext, quantidade_pro_pesquisa
+
+    def mostrar_todos(self):
+        self.__tela_candidato.mostrar_todos()

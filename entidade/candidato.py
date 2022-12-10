@@ -14,6 +14,9 @@ class Candidato(ABC):
         self.__votos_professor = 0
         self.__votos_servidor = 0
 
+    def __lt__(self, other):
+        return self.__numero < other.numero
+
     @property
     def nome(self):
         return self.__nome

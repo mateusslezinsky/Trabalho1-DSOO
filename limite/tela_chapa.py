@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 from limite.tela_abstrata import TelaAbstrata
+from operator import itemgetter
 
 
 class TelaChapa(TelaAbstrata):
@@ -85,3 +86,12 @@ class TelaChapa(TelaAbstrata):
         dados_consultados = f"Essa chapa foi excluída:\n\nNome cadastrado para a chapa: {dados.nome} \nID cadastrado para a chapa: {dados.id}"
         self.window = sg.Popup(
             dados_consultados, title="Exclusão de chapa", font=("Helvetica", 18))
+
+    def mostrar_todos(self):
+        dados_consultados = ""
+        total = 0
+        for index, chapa in enumerate(sorted(self.__controlador_chapa.chapas.get_all())):
+            dados_consultados += f"\n{index+1} - Chapa de nome: {chapa.nome}\n ID: {chapa.id}\n"
+            total += 1
+        self.window = sg.Popup(
+            dados_consultados + f"\nO total cadastrado é: {total}", title="Consulta de todas as chapas", font=("Helvetica", 18))

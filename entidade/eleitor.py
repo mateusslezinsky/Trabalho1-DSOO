@@ -13,6 +13,9 @@ class Eleitor:
         self.__cpf = cpf
         self.__tipo_eleitor = tipo_eleitor
 
+    def __lt__(self, other):
+        return self.__cpf < other.cpf
+
     @property
     def nome(self):
         return self.__nome

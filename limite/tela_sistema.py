@@ -43,7 +43,7 @@ class TelaSistema(TelaAbstrata):
             "key2": "Alterar",
             "key3": "Consultar",
             "key4": "Excluir",
-            "key5": "",
+            "key5": "Mostrar cadastros",
             "key0": "Voltar"
         })
         button, values = self.window.Read()
@@ -56,6 +56,8 @@ class TelaSistema(TelaAbstrata):
             opcao = 3
         elif values['4']:
             opcao = 4
+        elif values['5']:
+            opcao = 5
         elif values['0'] or button in (None, 'Cancelar'):
             opcao = 0
         if menu == "Candidatos":
@@ -66,16 +68,6 @@ class TelaSistema(TelaAbstrata):
     def lida_com_erro(self):
         sg.Popup("Digite uma opção válida!",
                  title="Erro", font=("Helvetica", 18))
-
-    # Excluir depois da tela eleitor ser implementada
-    def verifica_int(self, mensagem):
-        while True:
-            try:
-                variavel = int(input(mensagem))
-                break
-            except ValueError:
-                print("\nO valor digitado não é válido. Tente novamente!")
-        return variavel
 
     def mensagem_redefine_sistema(self):
         self.window = sg.Popup(

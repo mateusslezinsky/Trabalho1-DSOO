@@ -57,6 +57,7 @@ class ControladorSistema:
                   2: attr["alterar"],
                   3: attr["consultar"],
                   4: attr["excluir"],
+                  5: attr["mostrar_todos"],
                   0: self.abre_tela}
         while True:
             try:

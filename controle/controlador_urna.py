@@ -4,7 +4,6 @@ from limite.tela_urna import TelaUrna
 from entidade.reitor import Reitor
 from entidade.pro_reitor import ProReitor, TipoProReitor
 from entidade.voto import Voto
-from persistencia.urnaDAO import UrnaDAO
 
 
 class ControladorUrna:
@@ -52,14 +51,14 @@ class ControladorUrna:
 
     def homologacao(self):
         quantidade_reitor, quantidade_pro_grad, quantidade_pro_ext, quantidade_pro_pesquisa = self.__controlador_candidatos.conta_candidatos()
-        if len(self.__controlador_eleitores.eleitores) > 0 \
+        if len(self.__controlador_eleitores.eleitores.get_all()) > 0 \
                 and quantidade_reitor > 0 \
                 and quantidade_pro_grad > 0 \
                 and quantidade_pro_ext > 0 \
                 and quantidade_pro_pesquisa > 0:
             if self.__urna is None:
                 urna = Urna(self.__controlador_candidatos.candidatos.get_all(),
-                            self.__controlador_eleitores.eleitores)
+                            self.__controlador_eleitores.eleitores.get_all())
                 self.__urna = urna
                 self.__urna.homologada = True
                 self.__urna.votacao_encerrada = False
@@ -134,13 +133,14 @@ class ControladorUrna:
                             eleitor_consultado)
 
     def obtem_proporcao(self, voto):
+        quantidade_aluno, quantidade_professor, quantidade_servidor = self.conta_eleitores()
         if voto.tipo_eleitor == 1:
-            proporcao = 1/40000
+            proporcao = 1/quantidade_aluno
         elif voto.tipo_eleitor == 2:
-            proporcao = 1/2500
+            proporcao = 1/quantidade_professor
         elif voto.tipo_eleitor == 3:
-            proporcao = 1/3100
-        return proporcao * 100
+            proporcao = 1/quantidade_servidor
+        return proporcao
 
     def calcula_resultado(self):
         if self.__urna is not None and self.__urna.votacao_encerrada:
@@ -213,3 +213,17 @@ class ControladorUrna:
         elif resposta == 0:
             return
         self.__controlador_sistema.redefine_sistema()
+
+    def conta_eleitores(self):
+        if self.__urna is not None:
+            quantidade_aluno = 0
+            quantidade_professor = 0
+            quantidade_servidor = 0
+            for eleitor in self.__urna.eleitores:
+                if eleitor.tipo_eleitor == TipoEleitor.ALUNO.value:
+                    quantidade_aluno += 1
+                if eleitor.tipo_eleitor == TipoEleitor.PROFESSOR.value:
+                    quantidade_professor += 1
+                if eleitor.tipo_eleitor == TipoEleitor.SERVIDOR.value:
+                    quantidade_servidor += 1
+            return quantidade_aluno, quantidade_professor, quantidade_servidor

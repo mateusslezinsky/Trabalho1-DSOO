@@ -32,7 +32,7 @@ class ControladorChapas:
             if chapa_dict["id"] == chapa.id:
                 self.__tela_chapa.error("ID já cadastrado!")
                 return
-        nova_chapa = Chapa(chapa_dict["nome"], chapa_dict["id"])
+        nova_chapa = Chapa(chapa_dict["nome"], int(chapa_dict["id"]))
         self.__chapas.add(nova_chapa)
 
     def altera_chapa(self):
@@ -50,7 +50,7 @@ class ControladorChapas:
                 if chapa.id == chapa_consultada.id:
                     self.__chapas.remove(chapa.id)
                     nova_chapa = Chapa(
-                        dados_tela_chapa["nome"], dados_tela_chapa["id"])
+                        dados_tela_chapa["nome"], int(dados_tela_chapa["id"]))
                     self.__chapas.add(nova_chapa)
 
     def consulta_chapa(self, mostrar=True):
@@ -73,11 +73,15 @@ class ControladorChapas:
                     self.__chapas.remove(chapa.id)
                     self.__tela_chapa.exclui_chapa(chapa)
 
+    def mostrar_todos(self):
+        self.__tela_chapa.mostrar_todos()
+
     def abre_tela(self):
         self.__controlador_sistema.tela_crud(
             {"cadastro": self.cadastra_chapa,
              "alterar": self.altera_chapa,
              "consultar": self.consulta_chapa,
              "excluir": self.exclui_chapa,
+             "mostrar_todos": self.mostrar_todos,
              "tela": self.__tela_chapa.tela_chapa_opcoes
              })

@@ -1,4 +1,5 @@
 from entidade.pro_reitor import ProReitor, TipoProReitor
+from entidade.reitor import Reitor
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 
@@ -180,3 +181,22 @@ class TelaCandidato(TelaAbstrata):
 
     def error(self, error):
         self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
+
+    def mostrar_todos(self):
+        dados_consultados = ""
+        divider = "-"*50
+        total = 0
+        for index, candidato in enumerate(sorted(self.__controlador_candidatos.candidatos.get_all())):
+            if isinstance(candidato, Reitor):
+                dados_consultados += f"\n{index+1} - Candidato de nome: {candidato.nome}\n Número: {candidato.numero}\n\n Chapa: {candidato.chapa.nome}\n ID de Chapa: {candidato.chapa.id}\n{divider}"
+            elif isinstance(candidato, ProReitor):
+                if candidato.tipo_pro_reitor == TipoProReitor.GRADUACAO.value:
+                    dados_consultados += f"\n{index+1} - Candidato de nome: {candidato.nome}\n Número: {candidato.numero}\n Tipo do pró-reitor: Graduação \n\n Chapa: {candidato.chapa.nome}\n ID de Chapa: {candidato.chapa.id}\n{divider}"
+                elif candidato.tipo_pro_reitor == TipoProReitor.EXTENSAO.value:
+                    dados_consultados += f"\n{index+1} - Candidato de nome: {candidato.nome}\n Número: {candidato.numero}\n Tipo do pró-reitor: Extensão \n\n Chapa: {candidato.chapa.nome}\n ID de Chapa: {candidato.chapa.id}\n{divider}"
+                elif candidato.tipo_pro_reitor == TipoProReitor.PESQUISA.value:
+                    dados_consultados += f"\n{index+1} - Candidato de nome: {candidato.nome}\n Número: {candidato.numero}\n Tipo do pró-reitor: Pesquisa \n\n Chapa: {candidato.chapa.nome}\n ID de Chapa: {candidato.chapa.id}\n{divider}"
+
+            total = index + 1
+        self.window = sg.Popup(
+            dados_consultados + f"\nO total cadastrado é: {total}", title="Consulta de todas os candidatos", font=("Helvetica", 18))

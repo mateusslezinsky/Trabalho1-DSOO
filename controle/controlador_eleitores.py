@@ -42,7 +42,8 @@ class ControladorEleitores:
     def altera_eleitor(self):
         eleitor_consultado = self.consulta_eleitor(mostrar=False)
         if eleitor_consultado is not None:
-            dados_eleitor = self.__tela_eleitor.altera_eleitor(eleitor_consultado)
+            dados_eleitor = self.__tela_eleitor.altera_eleitor(
+                eleitor_consultado)
             if dados_eleitor is None:
                 return
             for eleitor in self.__eleitores.get_all():
@@ -55,7 +56,7 @@ class ControladorEleitores:
                 if eleitor.cpf == eleitor_consultado.cpf:
                     self.__eleitores.remove(eleitor.cpf)
                     eleitor_a_alterar = Eleitor(
-                            dados_eleitor["nome"], dados_eleitor["cpf"], dados_eleitor["tipo_eleitor"])
+                        dados_eleitor["nome"], dados_eleitor["cpf"], dados_eleitor["tipo_eleitor"])
                     self.__eleitores.add(eleitor_a_alterar)
 
     def consulta_eleitor(self, mostrar=True):
@@ -84,12 +85,9 @@ class ControladorEleitores:
              "alterar": self.altera_eleitor,
              "consultar": self.consulta_eleitor,
              "excluir": self.exclui_eleitor,
+             "mostrar_todos": self.mostrar_todos,
              "tela": self.__tela_eleitor.tela_eleitor_opcoes
              })
 
-    def checa_se_ja_existe(self, id_a_checar, lista):
-        for item in lista:
-            if item.cpf == id_a_checar:
-                return True
-        else:
-            return False
+    def mostrar_todos(self):
+        self.__tela_eleitor.mostrar_todos()
