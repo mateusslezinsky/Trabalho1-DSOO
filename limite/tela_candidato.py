@@ -79,11 +79,11 @@ class TelaCandidato(TelaAbstrata):
             numero = values["numero"]
             dados_basicos = {"nome": nome, "numero": numero}
             if self.__controlador_candidatos.opcao_tipo_candidato == 2:
-                if values["1"]:
+                if values[str(TipoProReitor.GRADUACAO.value)]:
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.GRADUACAO.value
-                elif values["2"]:
+                elif values[str(TipoProReitor.EXTENSAO.value)]:
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.EXTENSAO.value
-                elif values["3"]:
+                elif values[str(TipoProReitor.PESQUISA.value)]:
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.PESQUISA.value
             self.window.Close()
             return dados_basicos
@@ -125,11 +125,11 @@ class TelaCandidato(TelaAbstrata):
             numero = values["numero"]
             dados_basicos = {"nome": nome, "numero": numero}
             if self.__controlador_candidatos.opcao_tipo_candidato == 2:
-                if values["1"]:
+                if values[str(TipoProReitor.GRADUACAO.value)]:
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.GRADUACAO.value
-                elif values["2"]:
+                elif values[str(TipoProReitor.EXTENSAO.value)]:
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.EXTENSAO.value
-                elif values["3"]:
+                elif values[str(TipoProReitor.PESQUISA.value)]:
                     dados_basicos["tipo_pro_reitor"] = TipoProReitor.PESQUISA.value
             self.window.Close()
             return dados_basicos

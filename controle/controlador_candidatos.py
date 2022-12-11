@@ -96,15 +96,8 @@ class ControladorCandidatos:
                     self.__tela_candidato.imprime_resposta_segundo_turno()
                     return
                 else:
-                    if candidato["tipo_pro_reitor"] == 1:
-                        pro_reitor_a_cadastrar = ProReitor(
-                            candidato["nome"], int(candidato["numero"]), objeto_chapa, TipoProReitor.GRADUACAO.value)
-                    elif candidato["tipo_pro_reitor"] == 2:
-                        pro_reitor_a_cadastrar = ProReitor(
-                            candidato["nome"], int(candidato["numero"]), objeto_chapa, TipoProReitor.EXTENSAO.value)
-                    elif candidato["tipo_pro_reitor"] == 3:
-                        pro_reitor_a_cadastrar = ProReitor(
-                            candidato["nome"], int(candidato["numero"]), objeto_chapa, TipoProReitor.PESQUISA.value)
+                    pro_reitor_a_cadastrar = ProReitor(
+                        candidato["nome"], int(candidato["numero"]), objeto_chapa, candidato["tipo_pro_reitor"])
                     self.__candidatos.add(
                         pro_reitor_a_cadastrar)
 

@@ -40,6 +40,8 @@ class ControladorChapas:
         if chapa_consultada is not None:
             dados_tela_chapa = self.__tela_chapa.alterar_chapa(
                 chapa_consultada)
+            if dados_tela_chapa is None:
+                return
             for chapa_loop in self.__chapas.get_all():
                 if chapa_consultada.id == dados_tela_chapa["id"]:
                     break

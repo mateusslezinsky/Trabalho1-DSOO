@@ -1,5 +1,5 @@
 from limite.tela_eleitor import TelaEleitor
-from entidade.eleitor import Eleitor, TipoEleitor
+from entidade.eleitor import Eleitor
 from persistencia.eleitorDAO import EleitorDAO
 
 

@@ -19,9 +19,12 @@ class TelaEleitor(TelaAbstrata):
             [self.text('CPF:  '),
              self.input_text('', key='cpf')],
             [self.text('Tipo de eleitor:')],
-            [self.input_radio('Aluno', key="1", default=True)],
-            [self.input_radio('Professor', key="2")],
-            [self.input_radio('Servidor', key="3")],
+            [self.input_radio('Aluno', key=str(
+                TipoEleitor.ALUNO.value), default=True)],
+            [self.input_radio('Professor', key=str(
+                TipoEleitor.PROFESSOR.value))],
+            [self.input_radio('Servidor', key=str(
+                TipoEleitor.SERVIDOR.value))],
             [self.confirm_button(), self.cancel_button('Voltar')]
         ]
         self.window = sg.Window(
@@ -34,12 +37,12 @@ class TelaEleitor(TelaAbstrata):
             nome = values["nome"].title().strip()
             cpf = values["cpf"]
             dados_basicos = {"nome": nome, "cpf": cpf}
-            if values['1']:
-                dados_basicos["tipo_eleitor"] = 1
-            elif values['2']:
-                dados_basicos["tipo_eleitor"] = 2
-            elif values['3']:
-                dados_basicos["tipo_eleitor"] = 3
+            if values[str(TipoEleitor.ALUNO.value)]:
+                dados_basicos["tipo_eleitor"] = TipoEleitor.ALUNO.value
+            elif values[str(TipoEleitor.PROFESSOR.value)]:
+                dados_basicos["tipo_eleitor"] = TipoEleitor.PROFESSOR.value
+            elif values[str(TipoEleitor.SERVIDOR.value)]:
+                dados_basicos["tipo_eleitor"] = TipoEleitor.SERVIDOR.value
             self.window.Close()
         return dados_basicos
 
@@ -85,11 +88,11 @@ class TelaEleitor(TelaAbstrata):
              self.input_text(eleitor.nome, key='nome')],
             [self.text('CPF:  '),
              self.input_text(eleitor.cpf, key='cpf')],
-            [self.input_radio('Aluno', key="1", default=(
+            [self.input_radio('Aluno', key=str(TipoEleitor.ALUNO.value), default=(
                 True if eleitor.tipo_eleitor == TipoEleitor.ALUNO.value else False))],
-            [self.input_radio('Professor', key="2", default=(
+            [self.input_radio('Professor', key=str(TipoEleitor.PROFESSOR.value), default=(
                 True if eleitor.tipo_eleitor == TipoEleitor.PROFESSOR.value else False))],
-            [self.input_radio('Servidor', key="3", default=(
+            [self.input_radio('Servidor', key=str(TipoEleitor.SERVIDOR.value), default=(
                 True if eleitor.tipo_eleitor == TipoEleitor.SERVIDOR.value else False))],
             [self.confirm_button(), self.cancel_button('Voltar')]
         ]
@@ -102,11 +105,11 @@ class TelaEleitor(TelaAbstrata):
             nome = values["nome"].title().strip()
             cpf = values["cpf"]
             dados_basicos = {"nome": nome, "cpf": cpf}
-            if values["1"]:
+            if values[str(TipoEleitor.ALUNO.value)]:
                 dados_basicos["tipo_eleitor"] = TipoEleitor.ALUNO.value
-            elif values["2"]:
+            elif values[str(TipoEleitor.PROFESSOR.value)]:
                 dados_basicos["tipo_eleitor"] = TipoEleitor.PROFESSOR.value
-            elif values["3"]:
+            elif values[str(TipoEleitor.SERVIDOR.value)]:
                 dados_basicos["tipo_eleitor"] = TipoEleitor.SERVIDOR.value
         self.window.Close()
         return dados_basicos
