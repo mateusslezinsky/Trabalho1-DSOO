@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from limite.tela_abstrata import TelaAbstrata
-from operator import itemgetter
+from entidade.chapa_exception import ChapaException
 
 
 class TelaChapa(TelaAbstrata):
@@ -32,14 +32,16 @@ class TelaChapa(TelaAbstrata):
             return {"nome": nome, "id": id}
 
     def error(self, error):
-        self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
+        try:
+            raise ChapaException()
+        except ChapaException:
+            self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
 
     def mostra_chapa(self, dados):
         if dados is not None:
             dados_consultados = f"Nome cadastrado atualmente para a chapa: {dados.nome} \nID cadastrado atualmente para a chapa: {dados.id}"
             self.window = sg.Popup(
                 dados_consultados, title="Dados da chapa consultada", font=("Helvetica", 18))
-
         else:
             self.error("Não foi possível encontrar a chapa desejada!")
 

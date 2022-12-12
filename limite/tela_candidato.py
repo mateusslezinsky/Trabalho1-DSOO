@@ -1,5 +1,6 @@
 from entidade.pro_reitor import ProReitor, TipoProReitor
 from entidade.reitor import Reitor
+from entidade.candidato_exception import CandidatoException
 from limite.tela_abstrata import TelaAbstrata
 import PySimpleGUI as sg
 
@@ -180,7 +181,10 @@ class TelaCandidato(TelaAbstrata):
             "O candidato não foi cadastrado/modificado. Motivo: segundo turno")
 
     def error(self, error):
-        self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
+        try:
+            raise CandidatoException()
+        except CandidatoException:
+            self.window = sg.Popup(error, title="Erro", font=("Helvetica", 18))
 
     def mostrar_todos(self):
         dados_consultados = ""
